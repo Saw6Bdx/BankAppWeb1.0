@@ -14,7 +14,7 @@ import model.Category;
 @Stateless
 public class CategoryManager {
      
-    @PersistenceContext(unitName="BankAppPU") 
+    @PersistenceContext(unitName="BankAppPU")
     private EntityManager em;
 
     private final List<Category> categories = new ArrayList<>();
