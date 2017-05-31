@@ -1,6 +1,5 @@
 package web;
 
-import biz.exception.CategoryDoesNotExistException;
 import biz.exception.CountryCodeDoesNotExistException;
 import java.io.IOException;
 

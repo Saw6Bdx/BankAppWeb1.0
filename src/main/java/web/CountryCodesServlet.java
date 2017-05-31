@@ -13,7 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import model.CountryCode;
 
-@WebServlet({"/countryCodes", "/index.html"})
+@WebServlet({"/countryCodes"})
+//@WebServlet({"/countryCodes", "/index.html"})
 public class CountryCodesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
