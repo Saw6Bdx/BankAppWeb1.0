@@ -78,7 +78,7 @@
             <a href="form.php" title="...">New Transaction</a>
         </nav>
         <section>
-            <form action="<c:url value="/deleteTransaction"><c:param name = "transactionLabel" value="${param['transactionLabel']}"/></c:url>" method="post">
+            <form action="<c:url value="/deleteTransaction"><c:param name = "transactionId" value="${param['transactionId']}"/></c:url>" method="post">
                 <label>Are you sure you want to delete this transaction <c:out value="${param['transactionLabel']}"/> ?</label>
                 <input type="submit" name="yesBtn" value="Yes" />
                 <input type="submit" name="noBtn" value="No" />

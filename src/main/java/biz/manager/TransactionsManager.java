@@ -47,8 +47,8 @@ public class TransactionsManager {
     public void delete(String parameter) {
 
         System.out.println("delete(TransactionsManager) :"+parameter);
-        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT a FROM Transactions a WHERE a.label=:ptrans", Transactions.class);
-        qTransactions.setParameter("ptrans", parameter);
+        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
+        qTransactions.setParameter("ptrans", Integer.parseInt(parameter));
         Transactions transaction = qTransactions.getResultList().get(0);
         this.em.remove(transaction);
         

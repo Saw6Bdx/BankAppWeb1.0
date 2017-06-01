@@ -15,11 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 
 /**
  *
@@ -45,7 +40,7 @@ public class TransactionsDeleteServlet extends HttpServlet {
         
         if (req.getParameter("yesBtn") != null) {
             try {
-                this.transactionsManager.delete(req.getParameter("transactionLabel"));
+                this.transactionsManager.delete(req.getParameter("transactionId"));
             } catch (IllegalStateException ex) {
                 Logger.getLogger(TransactionsDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
             }

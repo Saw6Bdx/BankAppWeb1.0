@@ -104,7 +104,11 @@
                             <c:out value="${transaction.idCategory}"/>
                         </td>
                         <td>
-                            <a href='<c:url value="/deleteTransaction"><c:param name = "transactionLabel" value="${transaction.label}"/></c:url>' title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
+                            <a href='<c:url value="/deleteTransaction">
+                                   <c:param name = "transactionId" value="${transaction.id}"/>
+                                   <c:param name = "transactionLabel" value="${transaction.label}"/>
+                               </c:url>' 
+                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
                         </td>
                     </tr>
                 </c:forEach>
