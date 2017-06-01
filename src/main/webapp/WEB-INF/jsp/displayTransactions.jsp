@@ -102,7 +102,6 @@
                         <td>
                             <c:out value="insert categoryXXX"/>
                         </td>
-                        </br>
                     </tr>
                 </c:forEach>
                 <tr>
