@@ -23,7 +23,7 @@ import model.Transactions;
  *
  * @author Guest
  */
-@WebServlet({"/transactions"})
+@WebServlet({"/transactions","/index.html"})
 public class TransactionsDisplayServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

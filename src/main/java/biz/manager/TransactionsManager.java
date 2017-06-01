@@ -23,23 +23,34 @@ import model.Transactions;
  */
 @Stateless
 public class TransactionsManager {
-    
+
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
+    
 
     private List<Transactions> transactionsList = new ArrayList<>();
 
-    @Lock(LockType.WRITE)
+    @Lock(LockType.READ)
     public List<Transactions> displayTransactions() throws NoTransactionsAvailableException {
-       
+
         try {
-            TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findAll",Transactions.class);
+            TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findAll", Transactions.class);
             this.transactionsList = qTransactions.getResultList();
-        
+
             return this.transactionsList;
         } catch (NoResultException e) {
             throw new NoTransactionsAvailableException();
         }
+
+    }
+
+    public void delete(String parameter) {
+
+        System.out.println("delete(TransactionsManager) :"+parameter);
+        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT a FROM Transactions a WHERE a.label=:ptrans", Transactions.class);
+        qTransactions.setParameter("ptrans", parameter);
+        Transactions transaction = qTransactions.getResultList().get(0);
+        this.em.remove(transaction);
         
     }
 }

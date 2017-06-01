@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import biz.manager.AccountManager;
 
-@WebServlet({"/account","/index.html"})
+@WebServlet({"/account"})
 public class AccountDisplayServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

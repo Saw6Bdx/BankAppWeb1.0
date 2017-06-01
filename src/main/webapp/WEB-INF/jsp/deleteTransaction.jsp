@@ -78,43 +78,11 @@
             <a href="form.php" title="...">New Transaction</a>
         </nav>
         <section>
-            <table class="table table-bordered table-hover">
-                <tr>
-                    <th>Date</th>
-                    <th>Label</th>
-                    <th>Amount</th>
-                    <th>Category</th>
-                    <th>Delete</th>
-                </tr>
-                <c:set var="total" value="${0}"/>
-                <c:forEach items="${transactionsList}" var="transaction">
-                    <tr>
-                        <td>
-                            <jsp:useBean id="transactionDate" scope="page" class="java.util.Date"/>
-                            <fmt:formatDate value="${transaction.date}" pattern="dd/MM/yyyy" />
-                        </td>
-                        <td>
-                            <c:out value="${transaction.label}"/>
-                        </td>
-                        <td>
-                            <c:out value="${transaction.amount}"/> €
-                            <c:set var="total" value="${total + transaction.amount}" />
-                        </td>
-                        <td>
-                            <c:out value="${transaction.idCategory}"/>
-                        </td>
-                        <td>
-                            <a href='<c:url value="/deleteTransaction"><c:param name = "transactionLabel" value="${transaction.label}"/></c:url>' title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <tr>
-                    <td class="noborder"></td>
-                    <td class="noborder"></td>
-                    <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
-                </tr>
-            </table>
-
+            <form action="<c:url value="/deleteTransaction"><c:param name = "transactionLabel" value="${param['transactionLabel']}"/></c:url>" method="post">
+                <label>Are you sure you want to delete this transaction <c:out value="${param['transactionLabel']}"/> ?</label>
+                <input type="submit" name="yesBtn" value="Yes" />
+                <input type="submit" name="noBtn" value="No" />
+            </form>
         </section>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
