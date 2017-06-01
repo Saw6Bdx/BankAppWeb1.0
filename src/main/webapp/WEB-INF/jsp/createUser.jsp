@@ -12,6 +12,13 @@
         <title>BankApp - New User</title>
     </head>
     <body>
+        
+        <c:choose>
+            <c:when test="${error eq 'login.already.exists'}">
+                This login already exists&nbsp;!<br><br>
+            </c:when>
+        </c:choose>
+        
         <header id="banniere" class="header">
             <img class="image-rounded" src="img/bank.jpg" alt="..."/>
             <h2>BankApp</h2>
