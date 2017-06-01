@@ -34,10 +34,10 @@ public class TransactionsDisplayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
-        List<Transactions> transactions;
+        List<Transactions> transactionsList;
         try {
-            transactions = this.transactionsManager.displayTransactions();
-            req.setAttribute("transactions", transactions);
+            transactionsList = this.transactionsManager.displayTransactions();
+            req.setAttribute("transactionsList", transactionsList);
             req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         } catch (NoTransactionsAvailableException ex) {
             log("No transactions available", ex);
