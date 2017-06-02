@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+	              http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="BankAppPU">
+		<jta-data-source>accountDataSource</jta-data-source>
+		<class>db.home.bank.TransactionType</class>
+		<class>db.home.bank.Postcode</class>
+		<class>db.home.bank.PeriodUnit</class>
+		<class>db.home.bank.Address</class>
+		<class>db.home.bank.Category</class>
+		<class>db.home.bank.Recipient</class>
+		<class>db.home.bank.AccountManager</class>
+		<class>db.home.bank.Holder</class>
+		<class>db.home.bank.Account</class>
+		<class>db.home.bank.Agency</class>
+		<class>db.home.bank.AccountType</class>
+		<class>db.home.bank.CountryCode</class>
+		<class>db.home.bank.Transactions</class>
+		<class>db.home.bank.Bank</class>
+		<properties>
+			<property name="openjpa.jdbc.DBDictionary" value="mysql" />
+			<!-- Cette propriété active la log des requêtes SQL réalisées par OpenJPA -->
+			<property name="openjpa.Log" value="SQL=Trace" />
+		</properties>
+	</persistence-unit>
+</persistence>

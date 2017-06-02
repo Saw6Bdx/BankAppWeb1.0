@@ -1,0 +1,39 @@
+package biz.manager;
+
+import biz.exception.NoTransactionsAvailableException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import model.Transactions;
+
+@Stateless
+public class TransactionsManager
+{
+  @PersistenceContext(unitName="BankAppPU")
+  private EntityManager em;
+  private List<Transactions> transactionsList = new ArrayList();
+  
+  @Lock(LockType.READ)
+  public List<Transactions> displayTransactions(int Id)
+    throws NoTransactionsAvailableException
+  {
+    try
+    {
+      TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account", Transactions.class);
+      qTransactions.setParameter("account", Integer.valueOf(Id));
+      this.transactionsList = qTransactions.getResultList();
+      
+      return this.transactionsList;
+    }
+    catch (NoResultException e)
+    {
+      throw new NoTransactionsAvailableException();
+    }
+  }
+}
