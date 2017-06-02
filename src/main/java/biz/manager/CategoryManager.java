@@ -44,6 +44,15 @@ public class CategoryManager {
         em.persist(newCategory);
     }
     
+    public void delete(String parameter) {
+
+        TypedQuery<Category> qCategory = this.em.createQuery("SELECT t FROM Category t WHERE t.id=:pid", Category.class);
+        qCategory.setParameter("pid", Integer.parseInt(parameter));
+        Category category = qCategory.getResultList().get(0);
+        this.em.remove(category);
+        
+    }
+    
     @Lock(LockType.READ) 
     private void setCategoryListFromDB() {
         TypedQuery<Category> qCountryCode = this.em.createNamedQuery("Category.findAll", Category.class);
