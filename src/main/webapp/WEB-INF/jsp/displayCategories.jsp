@@ -49,10 +49,10 @@
                     <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
                 </tr>
             </table>
-
-            <a href='<c:url value="/displayCategories"/>' 
-               title="Categories">  Categories</a>
         </section>
+
+        <a href='<c:url value="/categoryCreation"/>' 
+           title="categoryCreation">New category</a>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

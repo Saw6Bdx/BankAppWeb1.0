@@ -55,7 +55,7 @@ public class CategoriesDisplayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
-        try {
+        /*try {
             String categoryLabel = req.getParameter("categoryLabel");
             Category category = this.categoryManager.save("CategoriesServletL35");
             System.out.println("doPost(CategoriesServlet) - l36: " + categoryLabel);
@@ -63,6 +63,6 @@ public class CategoriesDisplayServlet extends HttpServlet {
         } catch (CategoryAlreadyExistingException ex) {
             req.setAttribute("error", "category.already.exists");
             doGet(req, resp);
-        }
+        }*/
     }
 }

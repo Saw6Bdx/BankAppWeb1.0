@@ -22,7 +22,6 @@ public class CategoryManager {
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
 
-    private final List<Category> categories = new ArrayList<>();
     private List<Category> categoriesList = new ArrayList<>();
     private List<Transactions> transactionsList = new ArrayList<>();
 
@@ -33,23 +32,27 @@ public class CategoryManager {
     }
 
     @Lock(LockType.WRITE) // pas obligé, LockType par défault
-    public Category save(String label) throws CategoryAlreadyExistingException {
-        for (Category category : categories) {
+    public void save(String label) throws CategoryAlreadyExistingException {
+        setCategoryListFromDB();
+        for (Category category : categoriesList) {
             if (category.getLabel().equals(label)) {
                 throw new CategoryAlreadyExistingException();
             }
         }
 
-        Category newCategory = new Category(null, label);//"CategoryManagerL33");
+        Category newCategory = new Category(null, label);
         em.persist(newCategory);
-
-        categories.add(newCategory);
-        return newCategory;
+    }
+    
+    @Lock(LockType.READ) 
+    private void setCategoryListFromDB() {
+        TypedQuery<Category> qCountryCode = this.em.createNamedQuery("Category.findAll", Category.class);
+        this.categoriesList = qCountryCode.getResultList();
     }
 
     @Lock(LockType.READ)
     public Category getByLabel(String label) throws CategoryDoesNotExistException {
-        for (Category category : categories) {
+        for (Category category : categoriesList) {
             if (category.getLabel().equals(label)) {
                 return category;
             }
@@ -57,9 +60,7 @@ public class CategoryManager {
         throw new CategoryDoesNotExistException();
     }
 
-    public List<Category> getCategoriesList() {
-        return this.categoriesList;
-    }
+    
 
     @Lock(LockType.READ)
     public double[] calculatePercentByCategories() throws NoCategoriesAvailableException, NoTransactionsAvailableException {
@@ -102,6 +103,10 @@ public class CategoryManager {
 
     public double[] getAmount() {
         return this.tabSumCategory;
+    }
+    
+    public List<Category> getCategoriesList() {
+        return this.categoriesList;
     }
 
     public double[] getAmountByCategories(int nbCategories) {

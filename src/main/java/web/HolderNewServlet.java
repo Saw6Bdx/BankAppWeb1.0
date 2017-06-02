@@ -9,8 +9,6 @@ import biz.exception.LoginAlreadyExistingException;
 import biz.exception.PasswordsNotIdenticalException;
 import biz.manager.HolderManager;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
