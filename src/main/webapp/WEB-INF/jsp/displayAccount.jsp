@@ -27,20 +27,24 @@
 
         <section>
             <table class="table table-bordered table-hover">
-            <tr>
+                <tr>
                     <th>Account</th>
                     <th>Balance</th>
                 </tr>
-            <!--c:set var="balance" value="${a.firstBalance}"/-->
-            <c:forEach items="${accountList}" var="account">
-                <tr>
-                    <td>
-                        <a href='<c:url value="/transactionsDisplay"><c:param name="accountId" value="${account.id}"/></c:url>'><c:out value="${account}"/></a>
-                    </td>
-                    <td>
-              </td>
-                </tr>
-            </c:forEach>
+                <c:set var="pos" value="${0}"/>
+                <c:forEach items="${accountList}" var="account">
+                    <tr>
+                        <td>
+                            <a href='<c:url value="/transactionsDisplay">
+                                   <c:param name="accountId" value="${account.id}"/></c:url>'>
+                               <c:out value="${account}"/></a>
+                        </td>
+                        <td>
+                            <c:out value="${account.firstBalance+sumTransactions[pos]}"/> €
+                        </td>
+                    </tr>
+                    <c:set var="pos" value="${pos + 1}" />
+                </c:forEach>
             </table>
         </section>
     </body>
