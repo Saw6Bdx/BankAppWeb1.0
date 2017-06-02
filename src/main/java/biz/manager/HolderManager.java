@@ -6,6 +6,7 @@
 package biz.manager;
 
 import biz.exception.LoginAlreadyExistingException;
+import biz.exception.PasswordsNotIdenticalException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Lock;
@@ -27,14 +28,21 @@ public class HolderManager {
     private List<Holder> holdersList = new ArrayList<>();
 
     @Lock(LockType.WRITE)
-    public void createUser(Holder holder, Address address, Postcode postcode) throws LoginAlreadyExistingException {
+    public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation) 
+            throws LoginAlreadyExistingException, PasswordsNotIdenticalException {
 
         getHolderFromDB();
 
+        // Check if the login is already used
         for (Holder hldr : holdersList) {
             if (hldr.getLogin().equals(holder.getLogin())) {
                 throw new LoginAlreadyExistingException();
             }
+        }
+        
+        // Check if the password and its confirmation are identical
+        if (!holder.getPassword().equals(pwdConfirmation)) {
+            throw new PasswordsNotIdenticalException();
         }
         // Check if the postcode and the city already exist in the database
         this.em.persist(holder);

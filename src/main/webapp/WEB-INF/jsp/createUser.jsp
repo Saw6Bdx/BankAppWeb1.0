@@ -12,13 +12,6 @@
         <title>BankApp - New User</title>
     </head>
     <body>
-        
-        <c:choose>
-            <c:when test="${error eq 'login.already.exists'}">
-                This login already exists&nbsp;!<br><br>
-            </c:when>
-        </c:choose>
-        
         <header id="banniere" class="header">
             <img class="image-rounded" src="img/bank.jpg" alt="..."/>
             <h2>BankApp</h2>
@@ -98,11 +91,21 @@
                 <input class="form-control" type="txtLabel" name="userLogin" placeholder="Login" 
                        value="<c:out value="${param['userLogin']}"/>"/>
             </div><br/><br/>
+            <c:choose>
+                <c:when test="${error eq 'login.already.exists'}">
+                    <p class="errorMsgColor">This login already exists&nbsp;!</p><br><br>
+                </c:when>
+            </c:choose>
             <div class="form-group">
                 Password
                 <input class="form-control" type="txtLabel" name="userPassword" placeholder="********" 
                        value="<c:out value="${param['userPassword']}"/>"/>
             </div><br/><br/>
+            <c:choose>
+                <c:when test="${error eq 'pwd.not.identical'}">
+                    <p class="errorMsgColor">Passwords are not identical&nbsp;!</p><br><br>
+                </c:when>
+            </c:choose>
             <div class="form-group">
                 Confirm Password
                 <input class="form-control" type="txtLabel" name="userPasswordConfirmation" placeholder="********" 

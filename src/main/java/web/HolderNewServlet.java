@@ -6,6 +6,7 @@
 package web;
 
 import biz.exception.LoginAlreadyExistingException;
+import biz.exception.PasswordsNotIdenticalException;
 import biz.manager.HolderManager;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -72,10 +73,14 @@ public class HolderNewServlet extends HttpServlet {
             holder.setIdAddress(address);
 
             try {
-                this.holderManager.createUser(holder, address, postcode);
+                this.holderManager.createUser(holder, address, postcode, req.getParameter("userPasswordConfirmation"));
             } catch (LoginAlreadyExistingException ex) {
                 log("Login already existing in the database", ex);
                 req.setAttribute("error", "login.already.exists");
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/createUser.jsp").forward(req, resp);
+            } catch (PasswordsNotIdenticalException ex) {
+                log("Passwords are not identical", ex);
+                req.setAttribute("error", "pwd.not.identical");
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/createUser.jsp").forward(req, resp);
             }
 

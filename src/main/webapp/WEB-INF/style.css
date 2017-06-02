@@ -81,3 +81,6 @@ legend{
     margin-top: 4px;
     margin-left: 5px;
 }
+.errorMsgColor{
+    color: red;
+}
