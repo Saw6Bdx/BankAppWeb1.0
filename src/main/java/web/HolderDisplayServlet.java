@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Holder;
 
-@WebServlet({"/holderDisplay", "/index.html"})
+@WebServlet({"/holderDisplay"})
 public class HolderDisplayServlet
         extends HttpServlet {
 
