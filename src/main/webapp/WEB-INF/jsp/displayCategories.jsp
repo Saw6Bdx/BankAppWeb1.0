@@ -10,7 +10,7 @@
             <%@include file="../style.css" %>
         </style>
         <meta charset="utf-8">
-        <title>BankApp - Transactions</title>
+        <title>BankApp - Categories</title>
     </head>
     <body>
         <header id="banniere" class="header">
@@ -23,48 +23,37 @@
         <section>
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>Date</th>
-                    <th>Label</th>
-                    <th>Amount</th>
                     <th>Category</th>
-                    <th>Delete</th>
+                    <th>Amount</th>
+                    <th>Percent</th>
                 </tr>
+                <c:set var="pos" value="${0}"/>
                 <c:set var="total" value="${0}"/>
-                <c:forEach items="${transactionsList}" var="transaction">
+                <c:forEach items="${categoriesList}" var="category">
                     <tr>
                         <td>
-                            <jsp:useBean id="transactionDate" scope="page" class="java.util.Date"/>
-                            <fmt:formatDate value="${transaction.date}" pattern="dd/MM/yyyy" />
+                            <c:out value="${category.label}"/>
                         </td>
                         <td>
-                            <c:out value="${transaction.label}"/>
+                            <c:out value="${amount[pos]}"/> €
+                            <c:set var="total" value="${total + amount[pos]}" />
                         </td>
                         <td>
-                            <c:out value="${transaction.amount}"/> €
-                            <c:set var="total" value="${total + transaction.amount}" />
+                            <c:out value="${percentByCategories[pos]}"/>
                         </td>
-                        <td>
-                            <c:out value="${transaction.idCategory}"/>
-                        </td>
-                        <td>
-                            <a href='<c:url value="/deleteTransaction">
-                                   <c:param name = "transactionId" value="${transaction.id}"/>
-                                   <c:param name = "transactionLabel" value="${transaction.label}"/>
-                               </c:url>' 
-                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
-                        </td>
+                        <c:set var="pos" value="${pos + 1}" />
                     </tr>
                 </c:forEach>
                 <tr>
-                    <td class="noborder"></td>
                     <td class="noborder"></td>
                     <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
                 </tr>
             </table>
 
-                    <a href='<c:url value="/displayCategories"/>' 
+            <a href='<c:url value="/displayCategories"/>' 
                title="Categories">  Categories</a>
         </section>
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
