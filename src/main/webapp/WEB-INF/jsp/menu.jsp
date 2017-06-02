@@ -3,4 +3,5 @@
 <a href="index.html" title="...">Home</a>
 <a href='<c:url value="/account"/>'>Accounts List</a> 
 <a href='<c:url value="/transactions"/>'>Transactions List</a> 
+<a href='<c:url value="/holderDisplay"/>'>Change user</a>
 <a href="form.php" title="...">New Transaction</a>

@@ -1,6 +1,7 @@
 package web;
 
 import biz.exception.NoAccountAvailableException;
+import biz.manager.AccountManager;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,9 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
-import biz.manager.AccountManager;
 
-@WebServlet({"/account"})
+@WebServlet({"/accountDisplay"})
 public class AccountDisplayServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -22,13 +22,11 @@ public class AccountDisplayServlet extends HttpServlet {
     @EJB
     AccountManager accountManager;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        List<Account> account;
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
-            account = this.accountManager.displayAccount();
-            req.setAttribute("account", account);
+            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
+            req.setAttribute("accountList", accountList);
             req.getRequestDispatcher("/WEB-INF/jsp/displayAccount.jsp").forward(req, resp);
         } catch (NoAccountAvailableException ex) {
             log("No account available", ex);
@@ -36,7 +34,5 @@ public class AccountDisplayServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/displayAccount.jsp").forward(req, resp);
             Logger.getLogger(AccountDisplayServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-
 }

@@ -18,10 +18,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import utils.Check;
-import utils.Valid;
 
 /**
  *
@@ -29,6 +29,7 @@ import utils.Valid;
  */
 @Entity
 @XmlRootElement
+@Table(name="agency")
 @NamedQueries({
     @NamedQuery(name = "Agency.findAll", query = "SELECT a FROM Agency a")
     , @NamedQuery(name = "Agency.findById", query = "SELECT a FROM Agency a WHERE a.id = :id")

@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -43,27 +43,13 @@
             a:link, a:visited, a:active{
                 text-decoration: none;
             }
-            table{
-                margin: 0 auto;
-                border-collapse: collapse;
-            }
-            td, th{
-                border-width: 1px;
-                border-color: #000000;
-                border-style: solid;
-                text-align: center;
-                padding: 5px;
-            }
             td img{
                 width: 30px;
             }
-            .noborder{
-                border: none !important;
-            }
-            .table-bordered{border: none;}
+
         </style>
         <meta charset="utf-8">
-        <title>BankApp - Accounts</title>
+        <title>BankApp - Home</title>
     </head>
     <body>
         <header id="banniere" class="header">
@@ -71,31 +57,28 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
-        </nav>
-        <c:choose>
-            <c:when test="${error eq 'no.account.available'}">
-                No account registered&nbsp;!<br><br>
-            </c:when>
-        </c:choose>
 
+        </nav>
         <section>
             <table class="table table-bordered table-hover">
-            <tr>
-                    <th>Account</th>
-                    <th>Balance</th>
-                </tr>
-            <!--c:set var="balance" value="${a.firstBalance}"/-->
-            <c:forEach items="${accountList}" var="account">
                 <tr>
-                    <td>
-                        <a href='<c:url value="/transactionsDisplay"><c:param name="accountId" value="${account.id}"/></c:url>'><c:out value="${account}"/></a>
-                    </td>
-                    <td>
-              </td>
+                    <th>User</th>
                 </tr>
-            </c:forEach>
+                <c:forEach items="${holdersList}" var="holder">
+                    <tr>
+                        <td>
+                            <a href='<c:url value="/accountDisplay">
+                                   <c:param name="holderId" value="${holder.id}"/>
+                               </c:url>'><c:out value="${holder}"/></a>
+                            </td>
+                        </tr>
+                </c:forEach>
             </table>
+
         </section>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     </body>
 </html>

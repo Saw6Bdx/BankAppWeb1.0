@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,6 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
+@Table(name="countryCode")
 @NamedQueries({
     @NamedQuery(name = "CountryCode.findAll", query = "SELECT c FROM CountryCode c")
     , @NamedQuery(name = "CountryCode.findById", query = "SELECT c FROM CountryCode c WHERE c.id = :id")

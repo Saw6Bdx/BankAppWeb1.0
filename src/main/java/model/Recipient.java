@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import utils.Check;
@@ -25,6 +26,7 @@ import utils.Check;
  */
 @Entity
 @XmlRootElement
+@Table(name="recipient")
 @NamedQueries({
     @NamedQuery(name = "Recipient.findAll", query = "SELECT r FROM Recipient r")
     , @NamedQuery(name = "Recipient.findById", query = "SELECT r FROM Recipient r WHERE r.id = :id")

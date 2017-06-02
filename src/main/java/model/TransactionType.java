@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import utils.Check;
@@ -26,6 +27,7 @@ import utils.Check;
  */
 @Entity
 @XmlRootElement
+@Table(name="transactionType")
 @NamedQueries({
     @NamedQuery(name = "TransactionType.findAll", query = "SELECT t FROM TransactionType t")
     , @NamedQuery(name = "TransactionType.findById", query = "SELECT t FROM TransactionType t WHERE t.id = :id")

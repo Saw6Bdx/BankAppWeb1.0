@@ -23,7 +23,8 @@ import model.Postcode;
  *
  * @author Guest
  */
-@WebServlet({"/userCreation", "/index.html"})
+//@WebServlet({"/userCreation", "/index.html"})
+@WebServlet({"/userCreation"})
 public class HolderNewServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

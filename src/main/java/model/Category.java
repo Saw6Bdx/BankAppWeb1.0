@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import utils.Check;
@@ -28,6 +29,7 @@ import utils.Check;
  */
 @Entity
 @XmlRootElement
+@Table(name="category")
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
     , @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id")
@@ -51,10 +53,6 @@ public class Category implements Serializable {
     @ManyToOne
     private Category idLabel;
 
-    public void put(Category cat1, Category cat2) {
-        
-    }
-    
     public Category() {
     }
 

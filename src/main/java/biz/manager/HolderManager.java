@@ -6,6 +6,7 @@
 package biz.manager;
 
 import biz.exception.LoginAlreadyExistingException;
+import biz.exception.NoHolderAvailableException;
 import biz.exception.PasswordsNotIdenticalException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.Address;
@@ -28,7 +30,7 @@ public class HolderManager {
     private List<Holder> holdersList = new ArrayList<>();
 
     @Lock(LockType.WRITE)
-    public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation) 
+    public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation)
             throws LoginAlreadyExistingException, PasswordsNotIdenticalException {
 
         getHolderFromDB();
@@ -39,7 +41,7 @@ public class HolderManager {
                 throw new LoginAlreadyExistingException();
             }
         }
-        
+
         // Check if the password and its confirmation are identical
         if (!holder.getPassword().equals(pwdConfirmation)) {
             throw new PasswordsNotIdenticalException();
@@ -56,4 +58,20 @@ public class HolderManager {
         TypedQuery<Holder> qHolder = this.em.createNamedQuery("Holder.findAll", Holder.class);
         this.holdersList = qHolder.getResultList();
     }
+
+    @Lock(LockType.READ)
+    public List<Holder> displayHolder()
+            throws NoHolderAvailableException {
+        System.out.println("displayHolder(HolderManager)");
+        try {
+            System.out.println("test");
+            TypedQuery<Holder> qHolders = this.em.createNamedQuery("Holder.findAll", Holder.class);
+            this.holdersList = qHolders.getResultList();
+
+            return this.holdersList;
+        } catch (NoResultException e) {
+            throw new NoHolderAvailableException();
+        }
+    }
+    
 }

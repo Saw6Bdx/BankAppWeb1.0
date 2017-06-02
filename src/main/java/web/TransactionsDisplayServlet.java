@@ -23,7 +23,7 @@ import model.Transactions;
  *
  * @author Guest
  */
-@WebServlet({"/transactions"})
+@WebServlet({"/transactionsDisplay"})
 public class TransactionsDisplayServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class TransactionsDisplayServlet extends HttpServlet {
         
         List<Transactions> transactionsList;
         try {
-            transactionsList = this.transactionsManager.displayTransactions();
+            transactionsList = this.transactionsManager.displayTransactions(Integer.parseInt(req.getParameter("accountId")));
             req.setAttribute("transactionsList", transactionsList);
             req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         } catch (NoTransactionsAvailableException ex) {

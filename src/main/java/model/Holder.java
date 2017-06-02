@@ -18,13 +18,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import utils.Check;
 import utils.DateUtils;
-import utils.Valid;
 
 /**
  *
@@ -32,6 +32,7 @@ import utils.Valid;
  */
 @Entity
 @XmlRootElement
+@Table(name="holder")
 @NamedQueries({
     @NamedQuery(name = "Holder.findAll", query = "SELECT h FROM Holder h")
     , @NamedQuery(name = "Holder.findById", query = "SELECT h FROM Holder h WHERE h.id = :id")

@@ -31,10 +31,12 @@ public class TransactionsManager {
     private List<Transactions> transactionsList = new ArrayList<>();
 
     @Lock(LockType.READ)
-    public List<Transactions> displayTransactions() throws NoTransactionsAvailableException {
+    public List<Transactions> displayTransactions(int Id) throws NoTransactionsAvailableException {
 
         try {
-            TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findAll", Transactions.class);
+            //TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findAll", Transactions.class);
+            TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account", Transactions.class);
+            qTransactions.setParameter("account", Integer.valueOf(Id));
             this.transactionsList = qTransactions.getResultList();
 
             return this.transactionsList;

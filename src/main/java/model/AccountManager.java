@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@Table(name="accountManager")
 @NamedQueries({
     @NamedQuery(name = "AccountManager.findAll", query = "SELECT a FROM AccountManager a")
     , @NamedQuery(name = "AccountManager.findById", query = "SELECT a FROM AccountManager a WHERE a.id = :id")
