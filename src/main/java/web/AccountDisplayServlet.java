@@ -26,12 +26,11 @@ public class AccountDisplayServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
-            System.out.println("doGet(AccountDisplayServlet) :"+accountList);
             double[] sumTransactions = this.accountManager.sumTransactionsByAccount(accountList);
-            req.setAttribute("accountList", accountList);
-            //double[] sumTransactions = {0.0, 0.0, 0.0};
             
+            req.setAttribute("accountList", accountList);
             req.setAttribute("sumTransactions",sumTransactions);
+            
             req.getRequestDispatcher("/WEB-INF/jsp/displayAccount.jsp").forward(req, resp);
         } catch (NoAccountAvailableException ex) {
             log("No account available", ex);

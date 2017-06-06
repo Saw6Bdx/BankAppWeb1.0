@@ -58,9 +58,22 @@
                 <tr>
                     <td class="noborder"></td>
                     <td class="noborder"></td>
-                    <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                    <c:choose>
+                        <c:when test = "${total < overdraft}">
+                            <td class="errorMsgColor"><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                        </c:when>    
+                        <c:otherwise>
+                            <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                        </c:otherwise>
+                    </c:choose>
                 </tr>
             </table>
+
+            <c:choose>
+                <c:when test = "${total < overdraft}">
+                    <p class="errorMsgColor">You are under your overdraft allowed of ${overdraft}€, please replenish your account&nbsp;!</p><br><br>
+                </c:when>
+            </c:choose>
 
             <a href='<c:url value="/displayCategories"/>' 
                title="displayCategories">Categories</a>

@@ -6,6 +6,7 @@
 package web;
 
 import biz.exception.NoTransactionsAvailableException;
+import biz.manager.AccountManager;
 import biz.manager.TransactionsManager;
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,9 @@ public class TransactionsDisplayServlet extends HttpServlet {
 
     @EJB
     TransactionsManager transactionsManager;
+    
+    @EJB
+    AccountManager accountManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,6 +42,7 @@ public class TransactionsDisplayServlet extends HttpServlet {
         try {
             transactionsList = this.transactionsManager.displayTransactions(Integer.parseInt(req.getParameter("accountId")));
             req.setAttribute("transactionsList", transactionsList);
+            req.setAttribute("overdraft", this.accountManager.getOverdraft(Integer.parseInt(req.getParameter("accountId"))));
             req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         } catch (NoTransactionsAvailableException ex) {
             log("No transactions available", ex);

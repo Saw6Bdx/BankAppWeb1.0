@@ -61,6 +61,12 @@ public class AccountManager {
             throw new NoAccountAvailableException();
         }
     }
+    
+    public double getOverdraft(int Id) {
+        TypedQuery<Account> qAccounts = this.em.createQuery("SELECT a FROM Account a WHERE a.id =:pid", Account.class);
+        qAccounts.setParameter("pid", Id);
+        return qAccounts.getResultList().get(0).getOverdraft();
+    }
 
     public double[] sumTransactionsByAccount(List<Account> accountList) {
 
