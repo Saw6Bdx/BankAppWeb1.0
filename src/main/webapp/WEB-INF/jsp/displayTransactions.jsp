@@ -29,7 +29,7 @@
                     <th>Category</th>
                     <th>Delete</th>
                 </tr>
-                <c:set var="total" value="${0}"/>
+                <c:set var="total" value="${firstBalance}"/>
                 <c:forEach items="${transactionsList}" var="transaction">
                     <tr>
                         <td>

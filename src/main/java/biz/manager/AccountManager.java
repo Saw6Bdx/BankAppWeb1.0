@@ -67,7 +67,13 @@ public class AccountManager {
         qAccounts.setParameter("pid", Id);
         return qAccounts.getResultList().get(0).getOverdraft();
     }
-
+    
+    public double getFirstBalance(int Id) {
+        TypedQuery<Account> qAccounts = this.em.createQuery("SELECT a FROM Account a WHERE a.id =:pid", Account.class);
+        qAccounts.setParameter("pid", Id);
+        return qAccounts.getResultList().get(0).getFirstBalance();
+    }
+    
     public double[] sumTransactionsByAccount(List<Account> accountList) {
 
         double[] sum = new double[accountList.size()];

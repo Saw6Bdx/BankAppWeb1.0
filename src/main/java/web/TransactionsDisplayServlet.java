@@ -43,6 +43,8 @@ public class TransactionsDisplayServlet extends HttpServlet {
             transactionsList = this.transactionsManager.displayTransactions(Integer.parseInt(req.getParameter("accountId")));
             req.setAttribute("transactionsList", transactionsList);
             req.setAttribute("overdraft", this.accountManager.getOverdraft(Integer.parseInt(req.getParameter("accountId"))));
+            req.setAttribute("firstBalance", this.accountManager.getFirstBalance(Integer.parseInt(req.getParameter("accountId"))));
+            
             req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         } catch (NoTransactionsAvailableException ex) {
             log("No transactions available", ex);
