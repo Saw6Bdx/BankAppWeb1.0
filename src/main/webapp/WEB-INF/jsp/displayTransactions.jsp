@@ -23,10 +23,11 @@
         <section>
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>Date</th>
-                    <th>Label</th>
-                    <th>Amount</th>
-                    <th>Category</th>
+                    <th>Date <button>Sort</button></th>
+                    <th>Label <button>Sort</button></th>
+                    <th>Debit</th>
+                    <th>Credit</th>
+                    <th>Category <button>Sort</button></th>
                     <th>Delete</th>
                 </tr>
                 <c:set var="total" value="${firstBalance}"/>
@@ -40,9 +41,18 @@
                             <c:out value="${transaction.label}"/>
                         </td>
                         <td>
-                            <c:out value="${transaction.amount}"/> €
-                            <c:set var="total" value="${total + transaction.amount}" />
+                            <c:if test = "${transaction.amount < 0}">
+                                <c:out value="${transaction.amount}"/> €
+                                <c:set var="total" value="${total + transaction.amount}" />
+                            </c:if>
                         </td>
+                        <td>
+                            <c:if test = "${transaction.amount > 0}">
+                                <c:out value="${transaction.amount}"/> €
+                                <c:set var="total" value="${total + transaction.amount}" />
+                            </c:if>
+                        </td>
+
                         <td>
                             <c:out value="${transaction.idCategory}"/>
                         </td>

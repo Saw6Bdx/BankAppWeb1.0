@@ -34,8 +34,7 @@ public class TransactionsManager {
     public List<Transactions> displayTransactions(int Id) throws NoTransactionsAvailableException {
 
         try {
-            //TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findAll", Transactions.class);
-            TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account", Transactions.class);
+            TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.date DESC", Transactions.class);
             qTransactions.setParameter("account", Integer.valueOf(Id));
             this.transactionsList = qTransactions.getResultList();
 
