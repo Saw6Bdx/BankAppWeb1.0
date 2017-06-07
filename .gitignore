@@ -11,3 +11,4 @@ target
 *.iml
 
 nb-configuration.xml
+/nbproject/

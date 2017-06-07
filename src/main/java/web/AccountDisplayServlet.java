@@ -22,10 +22,11 @@ public class AccountDisplayServlet extends HttpServlet {
     @EJB
     AccountManager accountManager;
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
+            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("idHolder")));
             double[] sumTransactions = this.accountManager.sumTransactionsByAccount(accountList);
             
             req.setAttribute("accountList", accountList);

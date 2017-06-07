@@ -9,7 +9,7 @@
             <%@include file="../style.css" %>
         </style>
         <meta charset="utf-8">
-        <title>BankApp - New User</title>
+        <title>BankApp - Log in</title>
     </head>
     <body>
         <header id="banniere" class="header">
@@ -29,17 +29,17 @@
             </c:choose>
             <div class="form-group">
                 Login
-                <input class="form-control" type="txtLabel" name="login" placeholder="login" 
+                <input class="form-control" type="text" name="login" placeholder="login" 
                        value="<c:out value="${param['login']}"/>"/>
             </div><br/><br/>
             <c:choose>
-                <c:when test="${error eq 'pwd.invalid'}">
+                <c:when test="${error eq 'pwd.is.invalid'}">
                     <p class="errorMsgColor">The password is invalid&nbsp;!</p><br><br>
                 </c:when>
             </c:choose>
             <div class="form-group">
                 Password
-                <input class="form-control" type="txtLabel" name="password" placeholder="********" 
+                <input class="form-control" type="password" name="password" placeholder="********" 
                        value="<c:out value="${param['password']}"/>"/>
             </div><br/><br/>
             <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="New user"/>
@@ -49,6 +49,6 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="dist/js/bootstrap.min.js"></script>
+        <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     </body>
 </html>

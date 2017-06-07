@@ -54,8 +54,19 @@ public class HolderManager {
         TypedQuery<Holder> qHolder = this.em.createNamedQuery("Holder.findAll", Holder.class);
         this.holdersList = qHolder.getResultList();
     }
-
-
+    
+    public List<String> getLoginList() {
+        TypedQuery<String> qLogin = this.em.createQuery("SELECT h.login FROM Holder h", String.class);
+        List<String> loginList = qLogin.getResultList();
+        return loginList;
+    }
+    
+    public List<Holder> getHolderWithLogin(String login) {
+        TypedQuery<Holder> qHolder = this.em.createQuery("SELECT h FROM Holder h WHERE h.login =:login", Holder.class);
+        List<Holder> holderList = qHolder.setParameter("login", login).getResultList();
+        return holderList;
+    }
+    
     public List<Holder> displayHolder()
             throws NoHolderAvailableException {
         try {
