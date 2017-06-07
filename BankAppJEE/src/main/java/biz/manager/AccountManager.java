@@ -14,9 +14,12 @@ import javax.persistence.TypedQuery;
 
 import biz.exception.AccountAlreadyExistingException;
 import biz.exception.NoAccountAvailableException;
-import biz.exception.NoTransactionsAvailableException;
+import biz.exception.NoAgencyAvailableException;
+import biz.exception.NoCountryCodeAvailableException;
 import model.Account;
 import model.AccountType;
+import model.Agency;
+import model.CountryCode;
 
 @Stateless
 public class AccountManager
@@ -25,6 +28,19 @@ public class AccountManager
   private EntityManager em;
   private List<Account> accountList = new ArrayList<Account>();
   private List<AccountType> accountTypeList = new ArrayList<AccountType>();
+  private List<CountryCode> countryCodeList = new ArrayList<CountryCode>();
+  private List<Agency> agencyList = new ArrayList<Agency>();
+  
+  @Lock(LockType.WRITE)
+  public void createAccount(Account account){//, Agency agency, Bank bank, AccountManager accountManager){
+	  
+	  this.em.persist(account);
+	  /*this.em.persist(agency);
+	  this.em.persist(bank);
+	  this.em.persist(accountManager);*/
+
+  }
+  
   
   @Lock(LockType.WRITE)
   public Account save(Integer Id, String number, Date creationDate, double firstBalance, double overdraft)
@@ -89,6 +105,40 @@ public class AccountManager
     catch (NoResultException e)
     {
       throw new NoAccountAvailableException();
+    }
+  }
+  
+  @Lock(LockType.READ)
+  public List<CountryCode> displayCountryCode()
+    throws NoCountryCodeAvailableException
+  {
+    try
+    {
+      TypedQuery<CountryCode> qCountryCode = this.em.createNamedQuery("CountryCode.findAll", CountryCode.class);
+      this.countryCodeList = qCountryCode.getResultList();
+      
+      return this.countryCodeList;
+    }
+    catch (NoResultException e)
+    {
+      throw new NoCountryCodeAvailableException();
+    }
+  }
+  
+  @Lock(LockType.READ)
+  public List<Agency> displayAgency()
+    throws NoAgencyAvailableException
+  {
+    try
+    {
+      TypedQuery<Agency> qAgency = this.em.createNamedQuery("Agency.findAll", Agency.class);
+      this.agencyList = qAgency.getResultList();
+      
+      return this.agencyList;
+    }
+    catch (NoResultException e)
+    {
+      throw new NoAgencyAvailableException();
     }
   }
 }
