@@ -1,7 +1,6 @@
 package biz.manager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Lock;
@@ -25,12 +24,9 @@ public class TransactionsManager
   private List<TransactionType> transactionTypeList = new ArrayList<TransactionType>();
   
   @Lock(LockType.WRITE)
-  public void createTransactions(String label, double amount, Date date, Date endDate){
-
-      this.em.persist(label);
-      this.em.persist(amount);
-      this.em.persist(date);
-      this.em.persist(endDate);
+  public void createTransactions(Transactions transactions){
+	  
+	  this.em.persist(transactions);
 
   }
   

@@ -24,7 +24,7 @@
             <fieldset><legend>New account</legend></fieldset>
             <div class="form-group">
                 Account type : <select class="form-control" name="accountType" value="<c:out value="${param['accountType']}"/>">
-                <option value="0">AccountType...</option>
+                <option value="0">Account type...</option>
             	<c:forEach items="${accountTypeList}" var="accountType">
 			         <option><c:out value ="${accountType}">${accountType}</c:out></option>
 			    </c:forEach>
