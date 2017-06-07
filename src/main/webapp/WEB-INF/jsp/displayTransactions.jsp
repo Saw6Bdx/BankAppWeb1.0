@@ -98,7 +98,7 @@
                                        <c:param name = "transactionAmount" value="${transaction.amount}"/>
                                        <c:param name = "transactionIdCategory" value="${transaction.idCategory}"/>
                                    </c:url>' 
-                                   title=""> <img src="img/lines.jpg" alt="croix" title="Modify a transaction"/> </a>
+                                   title=""> <img src="img/edit.png" alt="croix" title="Modify a transaction"/> </a>
                             </td>
                             <td>
                                 <a href='<c:url value="/deleteTransaction">
