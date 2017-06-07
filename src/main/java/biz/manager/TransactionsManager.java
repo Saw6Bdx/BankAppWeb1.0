@@ -81,7 +81,7 @@ public class TransactionsManager {
 
         switch (param) {
             case "category":
-                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.idCategory " + order, Transactions.class);
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.idCategory.label " + order, Transactions.class);
                 break;
             case "debit":
                 qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount " + order, Transactions.class);
