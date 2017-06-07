@@ -32,12 +32,9 @@ public class TransactionsManager {
     private List<Transactions> transactionsList = new ArrayList<Transactions>();
     private List<TransactionType> transactionTypeList = new ArrayList<TransactionType>();
 
-    public void createTransactions(String label, double amount, Date date, Date endDate) {
+    public void createTransactions(Transactions transactions) {
 
-        this.em.persist(label);
-        this.em.persist(amount);
-        this.em.persist(date);
-        this.em.persist(endDate);
+        this.em.persist(transactions);
 
     }
 
