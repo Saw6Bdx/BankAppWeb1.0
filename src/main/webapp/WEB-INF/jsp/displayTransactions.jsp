@@ -26,6 +26,8 @@
                       method="post" 
                       action="<c:url value="/transactionsDisplay">
                           <c:param name = "accountId" value="${accountId}"/>
+                          <c:param name = "overdraft" value="${overdraft}"/>
+                          <c:param name = "firstBalance" value="${firstBalance}"/>
                       </c:url>">
                     <tr>
                         <th>Date 

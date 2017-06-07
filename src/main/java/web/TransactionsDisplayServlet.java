@@ -92,6 +92,8 @@ public class TransactionsDisplayServlet extends HttpServlet {
             );
             req.setAttribute("transactionsList", transactionsList);
             req.setAttribute("accountId", req.getParameter("accountId"));
+            req.setAttribute("overdraft", req.getParameter("overdraft"));
+            req.setAttribute("firstBalance", req.getParameter("firstBalance"));
             req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         } catch (NoTransactionsAvailableException ex) {
             Logger.getLogger(TransactionsDisplayServlet.class.getName()).log(Level.SEVERE, null, ex);
