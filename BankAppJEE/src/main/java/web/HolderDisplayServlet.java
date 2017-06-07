@@ -29,8 +29,8 @@ public class HolderDisplayServlet
   {
     try
     {
-      List<Holder> holderList = this.holderManager.displayHolder();
-      req.setAttribute("holderList", holderList);
+      List<Holder> holdersList = this.holderManager.displayHolder();
+      req.setAttribute("holdersList", holdersList);
       req.getRequestDispatcher("/WEB-INF/jsp/displayHolder.jsp").forward(req, resp);
     }
     catch (NoHolderAvailableException ex)

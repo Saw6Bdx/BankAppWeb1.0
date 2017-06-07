@@ -6,47 +6,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 			<style>
-                html{
-                    font-family: Verdana, Tahoma, Sans Serif, Courrier New;
-                    font-size: 14px;
-                }
-                .header{
-                    font-size: 24px;
-                    border: solid 1px #CCEEDD;
-                    height: 100px;
-                    text-align: center;
-                }
-                article>header{
-                    border: none;
-                    font-size: 18px;
-                    color: white;
-                    background-color: black;
-                }
-                header>img{
-                    display: inline-block;
-                    height: 50px;
-                    margin: 20px 0 5px 5px;
-                }
-                header>h2{
-                    display: inline-block;
-                    vertical-align: middle;
-                }
-                nav{
-                    width: 800px;
-                    text-align: center;
-                    margin: 10px auto;
-                }
-                nav a{
-                    margin: 0 10px;
-                    color: rgb(45, 128, 135);
-                }
-                a:link, a:visited, a:active{
-                    text-decoration: none;
-                }
-                td img{
-                width: 30px;
-            	}
-                
+                <%@include file="../style.css" %>
             </style>
             <meta charset="utf-8">
 			<title>BankApp - Home</title>
@@ -64,7 +24,7 @@
                 <tr>
                     <th>User</th>
      			</tr>
-                <c:forEach items="${holderList}" var="holder">
+                <c:forEach items="${holdersList}" var="holder">
                     <tr>
                         <td>
                             <a href='<c:url value="/accountDisplay"><c:param name="holderId" value="${holder.id}"/></c:url>'><c:out value="${holder}"/></a>

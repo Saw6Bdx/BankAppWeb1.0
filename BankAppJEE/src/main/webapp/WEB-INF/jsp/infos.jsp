@@ -6,69 +6,7 @@
         <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="style.css"/>
         <style>
-            html{
-                font-family: Verdana, Tahoma, Sans Serif, Courrier New;
-                font-size: 14px;
-            }
-            .header{
-                font-size: 24px;
-                border: solid 1px #CCEEDD;
-                height: 100px;
-                text-align: center;
-            }
-            article>header{
-                border: none;
-                font-size: 18px;
-                color: white;
-                background-color: black;
-            }
-            header>img{
-                display: inline-block;
-                width: 50px;
-                margin: 20px 0 5px 5px;
-            }
-            header>h2{
-                display: inline-block;
-                vertical-align: middle;
-            }
-            nav{
-                width: 800px;
-                text-align: center;
-                margin: 10px auto;
-            }
-            nav a{
-                margin: 0 10px;
-                color: rgb(45, 128, 135);
-            }
-            a:link, a:visited, a:active{
-                text-decoration: none;
-            }
-            form{
-                margin: 0 auto;
-                border-collapse: collapse;
-                border-width: 1px;
-                border-color: #000000;
-                border-style: solid;
-                text-align: center;
-                padding: 5px;
-                width: 500px;
-            }
-            legend{
-                text-align: center;
-                width: 100%;
-                margin: 0 0 5px 0;
-            }
-            .radio-inline input[type=radio] {
-                position: absolute;
-                margin-top: 4px;
-                margin-left: 5px;
-            }
-            .checkbox-inline input[type=checkbox] {
-                position: absolute;
-                margin-top: 4px;
-                margin-left: 5px;
-            }
-
+            <%@include file="../style.css" %>
         </style>
         <meta charset="utf-8">
         <title>BankApp - Infos</title>

@@ -1,8 +1,9 @@
 package biz.manager;
 
-import biz.exception.NoTransactionsAvailableException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.ejb.Lock;
 import javax.ejb.LockType;
 import javax.ejb.Stateless;
@@ -10,6 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import biz.exception.NoTransactionsAvailableException;
+import model.TransactionType;
 import model.Transactions;
 
 @Stateless
@@ -17,7 +21,18 @@ public class TransactionsManager
 {
   @PersistenceContext(unitName="BankAppPU")
   private EntityManager em;
-  private List<Transactions> transactionsList = new ArrayList();
+  private List<Transactions> transactionsList = new ArrayList<Transactions>();
+  private List<TransactionType> transactionTypeList = new ArrayList<TransactionType>();
+  
+  @Lock(LockType.WRITE)
+  public void createTransactions(String label, double amount, Date date, Date endDate){
+
+      this.em.persist(label);
+      this.em.persist(amount);
+      this.em.persist(date);
+      this.em.persist(endDate);
+
+  }
   
   @Lock(LockType.READ)
   public List<Transactions> displayTransactions(int Id)
@@ -30,6 +45,23 @@ public class TransactionsManager
       this.transactionsList = qTransactions.getResultList();
       
       return this.transactionsList;
+    }
+    catch (NoResultException e)
+    {
+      throw new NoTransactionsAvailableException();
+    }
+  }
+  
+  @Lock(LockType.READ)
+  public List<TransactionType> displayTransactionType()
+    throws NoTransactionsAvailableException
+  {
+    try
+    {
+      TypedQuery<TransactionType> qTransactionType = this.em.createNamedQuery("TransactionType.findAll", TransactionType.class);
+      this.transactionTypeList = qTransactionType.getResultList();
+      
+      return this.transactionTypeList;
     }
     catch (NoResultException e)
     {
