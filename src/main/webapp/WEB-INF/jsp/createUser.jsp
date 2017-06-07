@@ -98,7 +98,7 @@
             </c:choose>
             <div class="form-group">
                 Password
-                <input class="form-control" type="txtLabel" name="userPassword" placeholder="********" 
+                <input class="form-control" type="password" name="userPassword" placeholder="********" 
                        value="<c:out value="${param['userPassword']}"/>"/>
             </div><br/><br/>
             <c:choose>
@@ -108,7 +108,7 @@
             </c:choose>
             <div class="form-group">
                 Confirm Password
-                <input class="form-control" type="txtLabel" name="userPasswordConfirmation" placeholder="********" 
+                <input class="form-control" type="password" name="userPasswordConfirmation" placeholder="********" 
                        value="<c:out value="${param['userPasswordConfirmation']}"/>"/>
             </div><br/><br/>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>

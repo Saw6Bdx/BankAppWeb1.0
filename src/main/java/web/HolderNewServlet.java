@@ -9,6 +9,7 @@ import biz.exception.LoginAlreadyExistingException;
 import biz.exception.PasswordsNotIdenticalException;
 import biz.manager.HolderManager;
 import java.io.IOException;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Address;
 import model.Holder;
 import model.Postcode;
+import utils.DateUtils;
 
 /**
  *
@@ -65,8 +67,11 @@ public class HolderNewServlet extends HttpServlet {
                     req.getParameter("userLogin"),
                     req.getParameter("userPassword")
             );
-            /* String userBirthday = req.getParameter("userBirthday");
-            holder.setBirthday(userBirthday);*/
+            holder.setBirthday(DateUtils.comboDate(
+                    Integer.parseInt(req.getParameter("userYear")),
+                    req.getParameter("userMonth"),
+                    Integer.parseInt(req.getParameter("userDay"))
+            ));
             holder.setPhone(req.getParameter("userPhone"));
             holder.setIdAddress(address);
 
