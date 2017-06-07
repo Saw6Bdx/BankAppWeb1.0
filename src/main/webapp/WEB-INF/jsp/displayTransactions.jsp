@@ -29,21 +29,37 @@
                       </c:url>">
                     <tr>
                         <th>Date 
-                            <input class="arrow-down" type="submit" name="sortDateDown" />
-                            <input class="arrow-up" type="submit" name="sortDateUp" />
+                            <button type="submit" name="sortDateDown" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </button>
+                            <button type="submit" name="sortDateUp" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                            </button>
                         </th>
                         <th>Label</th>
                         <th>Debit
-                            <input class="arrow-down" type="submit" name="sortDebitDown" />
-                            <input class="arrow-up" type="submit" name="sortDebitUp" />
+                            <button type="submit" name="sortDebitDown" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </button>
+                            <button type="submit" name="sortDebitUp" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                            </button>
                         </th>
                         <th>Credit
-                            <input class="arrow-down" type="submit" name="sortCreditDown" />
-                            <input class="arrow-up" type="submit" name="sortCreditUp" />
+                            <button type="submit" name="sortCreditDown" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </button>
+                            <button type="submit" name="sortCreditUp" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                            </button>
                         </th>
                         <th>Category
-                            <input class="arrow-down" type="submit" name="sortCategoryDown" />
-                            <input class="arrow-up" type="submit" name="sortCategoryUp" />
+                            <button type="submit" name="sortCategoryDown" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                            </button>
+                            <button type="submit" name="sortCategoryUp" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                            </button>
                         </th>
                         <th>Modify</th>
                         <th>Delete</th>
