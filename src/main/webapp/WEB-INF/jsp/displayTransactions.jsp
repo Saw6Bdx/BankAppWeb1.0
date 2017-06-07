@@ -19,65 +19,79 @@
         </header>
         <nav>
             <%@include file="menu.jsp" %>
-            
+
         </nav>
         <section>
             <table class="table table-bordered table-hover">
-                <tr>
-                    <th>Date <button>Sort</button></th>
-                    <th>Label <button>Sort</button></th>
-                    <th>Debit</th>
-                    <th>Credit</th>
-                    <th>Category <button>Sort</button></th>
-                    <th>Delete</th>
-                </tr>
-                <c:set var="total" value="${firstBalance}"/>
-                <c:forEach items="${transactionsList}" var="transaction">
+                <form class="form-inline form-horizontal" 
+                      method="post" 
+                      action="<c:url value="/transactionsDisplay">
+                          <c:param name = "accountId" value="${accountId}"/>
+                      </c:url>">
                     <tr>
-                        <td>
-                            <jsp:useBean id="transactionDate" scope="page" class="java.util.Date"/>
-                            <fmt:formatDate value="${transaction.date}" pattern="dd/MM/yyyy" />
-                        </td>
-                        <td>
-                            <c:out value="${transaction.label}"/>
-                        </td>
-                        <td>
-                            <c:if test = "${transaction.amount < 0}">
-                                <c:out value="${transaction.amount}"/> €
-                                <c:set var="total" value="${total + transaction.amount}" />
-                            </c:if>
-                        </td>
-                        <td>
-                            <c:if test = "${transaction.amount > 0}">
-                                <c:out value="${transaction.amount}"/> €
-                                <c:set var="total" value="${total + transaction.amount}" />
-                            </c:if>
-                        </td>
-
-                        <td>
-                            <c:out value="${transaction.idCategory}"/>
-                        </td>
-                        <td>
-                            <a href='<c:url value="/deleteTransaction">
-                                   <c:param name = "transactionId" value="${transaction.id}"/>
-                                   <c:param name = "transactionLabel" value="${transaction.label}"/>
-                               </c:url>' 
-                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
-                        </td>
+                        <th>Date 
+                            <input class="btn btn-primary" type="submit" name="sortDate" value="Sort"/>
+                        </th>
+                        <th>Label</th>
+                        <th>Debit
+                            <input class="btn btn-primary" type="submit" name="sortDebit" value="Sort"/>
+                        </th>
+                        <th>Credit
+                            <input class="btn btn-primary" type="submit" name="sortCredit" value="Sort"/>
+                        </th>
+                        <th>Category
+                            <input class="btn btn-primary" type="submit" name="sortCategory" value="Sort"/>
+                        </th>
+                        <th>Delete</th>
                     </tr>
-                </c:forEach>
-                <tr>
-                    <td class="noborder"></td>
-                    <td class="noborder"></td>
-                    <c:choose>
-                        <c:when test = "${total < overdraft}">
-                            <td class="errorMsgColor"><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
-                        </c:when>    
-                        <c:otherwise>
-                            <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
-                        </c:otherwise>
-                    </c:choose>
-                </tr>
+                    <c:set var="total" value="${firstBalance}"/>
+                    <c:forEach items="${transactionsList}" var="transaction">
+                        <tr>
+                            <td>
+                                <jsp:useBean id="transactionDate" scope="page" class="java.util.Date"/>
+                                <fmt:formatDate value="${transaction.date}" pattern="dd/MM/yyyy" />
+                            </td>
+                            <td>
+                                <c:out value="${transaction.label}"/>
+                            </td>
+                            <td>
+                                <c:if test = "${transaction.amount < 0}">
+                                    <c:out value="${transaction.amount}"/> €
+                                    <c:set var="total" value="${total + transaction.amount}" />
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test = "${transaction.amount > 0}">
+                                    <c:out value="${transaction.amount}"/> €
+                                    <c:set var="total" value="${total + transaction.amount}" />
+                                </c:if>
+                            </td>
+
+                            <td>
+                                <c:out value="${transaction.idCategory}"/>
+                            </td>
+                            <td>
+                                <a href='<c:url value="/deleteTransaction">
+                                       <c:param name = "transactionId" value="${transaction.id}"/>
+                                       <c:param name = "transactionLabel" value="${transaction.label}"/>
+                                   </c:url>' 
+                                   title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td class="noborder"></td>
+                        <td class="noborder"></td>
+                        <c:choose>
+                            <c:when test = "${total < overdraft}">
+                                <td class="errorMsgColor"><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                            </c:when>    
+                            <c:otherwise>
+                                <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
+                </form>
             </table>
 
             <c:choose>

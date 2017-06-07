@@ -55,7 +55,6 @@ public class TransactionsManager {
 
     }
 
-    
     public List<TransactionType> displayTransactionType() throws NoTransactionsAvailableException {
         try {
             TypedQuery<TransactionType> qTransactionType = this.em.createNamedQuery("TransactionType.findAll", TransactionType.class);
@@ -66,7 +65,6 @@ public class TransactionsManager {
             throw new NoTransactionsAvailableException();
         }
     }
-    
 
     public void delete(String parameter) {
 
@@ -75,6 +73,36 @@ public class TransactionsManager {
         qTransactions.setParameter("ptrans", Integer.parseInt(parameter));
         Transactions transaction = qTransactions.getResultList().get(0);
         this.em.remove(transaction);
+
+    }
+
+    public List<Transactions> transactionsOrderBy(int Id, String param) throws NoTransactionsAvailableException {
+
+        TypedQuery<Transactions> qTransactions;
+
+        switch (param) {
+            case "category":
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.idCategory ASC", Transactions.class);
+                break;
+            case "debit":
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount ASC", Transactions.class);
+                break;
+            case "credit":
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount DESC", Transactions.class);
+                break;
+            default: // date
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.date DESC", Transactions.class);
+                break;
+        }
+
+        qTransactions.setParameter("account", Id);
+
+        try {
+            this.transactionsList = qTransactions.getResultList();
+            return this.transactionsList;
+        } catch (NoResultException e) {
+            throw new NoTransactionsAvailableException();
+        }
 
     }
 }
