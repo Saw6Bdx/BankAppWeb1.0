@@ -31,7 +31,6 @@ public class CategoryManager {
     public CategoryManager() {
     }
 
-    @Lock(LockType.WRITE) // pas obligé, LockType par défault
     public void save(String label) throws CategoryAlreadyExistingException {
         setCategoryListFromDB();
         for (Category category : categoriesList) {
@@ -59,7 +58,6 @@ public class CategoryManager {
         this.categoriesList = qCountryCode.getResultList();
     }
 
-    @Lock(LockType.READ)
     public Category getByLabel(String label) throws CategoryDoesNotExistException {
         for (Category category : categoriesList) {
             if (category.getLabel().equals(label)) {
@@ -70,8 +68,6 @@ public class CategoryManager {
     }
 
     
-
-    @Lock(LockType.READ)
     public double[] calculatePercentByCategories() throws NoCategoriesAvailableException, NoTransactionsAvailableException {
 
         try {

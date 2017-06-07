@@ -22,6 +22,7 @@ public class AccountDisplayServlet extends HttpServlet {
     @EJB
     AccountManager accountManager;
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {

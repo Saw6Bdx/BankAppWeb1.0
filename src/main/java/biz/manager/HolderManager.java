@@ -66,7 +66,7 @@ public class HolderManager {
         List<Holder> holderList = qHolder.setParameter("login", login).getResultList();
         return holderList;
     }
-
+    
     public List<Holder> displayHolder()
             throws NoHolderAvailableException {
         try {
