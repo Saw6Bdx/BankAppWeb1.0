@@ -30,18 +30,23 @@
                       </c:url>">
                     <tr>
                         <th>Date 
-                            <input class="btn btn-primary" type="submit" name="sortDate" value="Sort"/>
+                            <input class="arrow-down" type="submit" name="sortDateDown" />
+                            <input class="arrow-up" type="submit" name="sortDateUp" />
                         </th>
                         <th>Label</th>
                         <th>Debit
-                            <input class="btn btn-primary" type="submit" name="sortDebit" value="Sort"/>
+                            <input class="arrow-down" type="submit" name="sortDebitDown" />
+                            <input class="arrow-up" type="submit" name="sortDebitUp" />
                         </th>
                         <th>Credit
-                            <input class="btn btn-primary" type="submit" name="sortCredit" value="Sort"/>
+                            <input class="arrow-down" type="submit" name="sortCreditDown" />
+                            <input class="arrow-up" type="submit" name="sortCreditUp" />
                         </th>
                         <th>Category
-                            <input class="btn btn-primary" type="submit" name="sortCategory" value="Sort"/>
+                            <input class="arrow-down" type="submit" name="sortCategoryDown" />
+                            <input class="arrow-up" type="submit" name="sortCategoryUp" />
                         </th>
+                        <th>Modify</th>
                         <th>Delete</th>
                     </tr>
                     <c:set var="total" value="${firstBalance}"/>
@@ -69,6 +74,13 @@
 
                             <td>
                                 <c:out value="${transaction.idCategory}"/>
+                            </td>
+                            <td>
+                                <a href='<c:url value="/modifyTransaction">
+                                       <c:param name = "transactionId" value="${transaction.id}"/>
+                                       <c:param name = "transactionLabel" value="${transaction.label}"/>
+                                   </c:url>' 
+                                   title=""> <img src="img/lines.jpg" alt="croix" title="Modify a transaction"/> </a>
                             </td>
                             <td>
                                 <a href='<c:url value="/deleteTransaction">

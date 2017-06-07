@@ -61,21 +61,34 @@ public class TransactionsDisplayServlet extends HttpServlet {
 
         List<Transactions> transactionsList;
         String param = "date"; //by default
+        String order = "ASC"; //by default
         
-        if (req.getParameter("sortCategory") != null) {
+        if (req.getParameter("sortCategoryUp") != null) {
             param = "category";
-        } else if (req.getParameter("sortDebit") != null) {
+        } else if (req.getParameter("sortCategoryDown") != null) {
+            param = "category";
+            order = "DESC";
+        } else if (req.getParameter("sortDebitUp") != null) {
             param = "debit";
-        } else if (req.getParameter("sortCredit") != null) {
+        } else if (req.getParameter("sortDebitDown") != null) {
+            param = "debit";
+            order = "DESC";
+        } else if (req.getParameter("sortCreditUp") != null) {
             param = "credit";
-        } else if (req.getParameter("sortDate") != null) {
+        } else if (req.getParameter("sortCreditDown") != null) {
+            param = "credit";
+            order = "DESC";
+        } else if (req.getParameter("sortDateUp") != null) {
             param = "date";
+        } else if (req.getParameter("sortDateDown") != null) {
+            param = "date";
+            order = "DESC";
         }
 
         try {
             transactionsList = this.transactionsManager.transactionsOrderBy(
                     Integer.parseInt(req.getParameter("accountId")),
-                    param
+                    param, order
             );
             req.setAttribute("transactionsList", transactionsList);
             req.setAttribute("accountId", req.getParameter("accountId"));

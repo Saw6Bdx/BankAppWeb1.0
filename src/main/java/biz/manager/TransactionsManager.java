@@ -76,22 +76,22 @@ public class TransactionsManager {
 
     }
 
-    public List<Transactions> transactionsOrderBy(int Id, String param) throws NoTransactionsAvailableException {
+    public List<Transactions> transactionsOrderBy(int Id, String param, String order) throws NoTransactionsAvailableException {
 
         TypedQuery<Transactions> qTransactions;
 
         switch (param) {
             case "category":
-                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.idCategory ASC", Transactions.class);
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.idCategory " + order, Transactions.class);
                 break;
             case "debit":
-                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount ASC", Transactions.class);
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount " + order, Transactions.class);
                 break;
             case "credit":
-                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount DESC", Transactions.class);
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.amount " + order, Transactions.class);
                 break;
             default: // date
-                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.date DESC", Transactions.class);
+                qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.date " + order, Transactions.class);
                 break;
         }
 
