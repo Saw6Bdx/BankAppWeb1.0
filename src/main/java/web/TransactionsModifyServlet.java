@@ -39,14 +39,15 @@ public class TransactionsModifyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         if (req.getParameter("yesBtn") != null) {
-            try {
-                this.transactionsManager.delete(req.getParameter("transactionId"));
-            } catch (IllegalStateException ex) {
-                Logger.getLogger(TransactionsDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.transactionsManager.modify(req.getParameter("transactionId"),
+                    req.getParameter("transactionDate"),
+                    req.getParameter("transactionLabel"),
+                    req.getParameter("transactionAmount"),
+                    req.getParameter("transactionIdCategory")
+            );
         }
         
-        resp.sendRedirect(req.getContextPath() + "/transactions");
+        req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
         
     }
 

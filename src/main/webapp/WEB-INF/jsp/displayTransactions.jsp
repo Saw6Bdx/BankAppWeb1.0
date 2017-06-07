@@ -19,7 +19,6 @@
         </header>
         <nav>
             <%@include file="menu.jsp" %>
-
         </nav>
         <section>
             <table class="table table-bordered table-hover">
@@ -78,7 +77,10 @@
                             <td>
                                 <a href='<c:url value="/modifyTransaction">
                                        <c:param name = "transactionId" value="${transaction.id}"/>
+                                       <c:param name = "transactionDate" value="${transaction.date}"/>
                                        <c:param name = "transactionLabel" value="${transaction.label}"/>
+                                       <c:param name = "transactionAmount" value="${transaction.amount}"/>
+                                       <c:param name = "transactionIdCategory" value="${transaction.idCategory}"/>
                                    </c:url>' 
                                    title=""> <img src="img/lines.jpg" alt="croix" title="Modify a transaction"/> </a>
                             </td>

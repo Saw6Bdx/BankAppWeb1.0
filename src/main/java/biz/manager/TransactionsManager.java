@@ -68,7 +68,6 @@ public class TransactionsManager {
 
     public void delete(String parameter) {
 
-        System.out.println("delete(TransactionsManager) :" + parameter);
         TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
         qTransactions.setParameter("ptrans", Integer.parseInt(parameter));
         Transactions transaction = qTransactions.getResultList().get(0);
@@ -104,5 +103,23 @@ public class TransactionsManager {
             throw new NoTransactionsAvailableException();
         }
 
+    }
+
+    public void modify(String Id, String date, String label, String amount, String idCategory) {
+        
+        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
+        qTransactions.setParameter("ptrans", Integer.parseInt(Id));
+        Transactions transaction = qTransactions.getResultList().get(0);
+        
+        Transactions trans = new Transactions(
+                Integer.parseInt(Id), 
+                label, 
+                Double.parseDouble(amount), 
+                transaction.getDate(),
+                transaction.getEndDate()
+        );
+        
+        this.em.merge(trans);
+        
     }
 }
