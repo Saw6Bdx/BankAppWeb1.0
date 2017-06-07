@@ -8,6 +8,7 @@ package biz.manager;
 import biz.exception.LoginAlreadyExistingException;
 import biz.exception.NoHolderAvailableException;
 import biz.exception.PasswordsNotIdenticalException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import javax.persistence.TypedQuery;
 import model.Address;
 import model.Holder;
 import model.Postcode;
+import static utils.Password.get_SHA_512_SecurePassword;
 
 @Stateless
 public class HolderManager {
@@ -29,7 +31,7 @@ public class HolderManager {
     private List<Postcode> postcodesList = new ArrayList<Postcode>();
 
     public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation)
-            throws LoginAlreadyExistingException, PasswordsNotIdenticalException {
+            throws LoginAlreadyExistingException, PasswordsNotIdenticalException, UnsupportedEncodingException {
 
         getHolderFromDB();
 
@@ -41,7 +43,7 @@ public class HolderManager {
         }
 
         // Check if the password and its confirmation are identical
-        if (!holder.getPassword().equals(pwdConfirmation)) {
+        if (!holder.getPassword().equals(get_SHA_512_SecurePassword(pwdConfirmation, "1"))) {
             throw new PasswordsNotIdenticalException();
         }
 
