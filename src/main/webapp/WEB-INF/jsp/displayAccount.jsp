@@ -18,6 +18,7 @@
         </header>
         <nav>
             <%@include file="menu.jsp" %>
+            <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${holder.id}"/></c:url>'><c:out value="${holder}"/>New Account</a>
         </nav>
         <c:choose>
             <c:when test="${error eq 'no.account.available'}">

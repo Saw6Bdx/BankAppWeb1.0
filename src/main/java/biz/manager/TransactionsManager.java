@@ -7,6 +7,7 @@ package biz.manager;
 
 import biz.exception.NoTransactionsAvailableException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
@@ -15,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import model.TransactionType;
 import model.Transactions;
 
 /**
@@ -26,16 +28,24 @@ public class TransactionsManager {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
-    
 
-    private List<Transactions> transactionsList = new ArrayList<>();
+    private List<Transactions> transactionsList = new ArrayList<Transactions>();
+    private List<TransactionType> transactionTypeList = new ArrayList<TransactionType>();
 
-    @Lock(LockType.READ)
+    public void createTransactions(String label, double amount, Date date, Date endDate) {
+
+        this.em.persist(label);
+        this.em.persist(amount);
+        this.em.persist(date);
+        this.em.persist(endDate);
+
+    }
+
     public List<Transactions> displayTransactions(int Id) throws NoTransactionsAvailableException {
 
         try {
             TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t JOIN t.idAccount a WHERE a.id =:account ORDER BY t.date DESC", Transactions.class);
-            qTransactions.setParameter("account", Integer.valueOf(Id));
+            qTransactions.setParameter("account", Id);
             this.transactionsList = qTransactions.getResultList();
 
             return this.transactionsList;
@@ -45,13 +55,26 @@ public class TransactionsManager {
 
     }
 
+    
+    public List<TransactionType> displayTransactionType() throws NoTransactionsAvailableException {
+        try {
+            TypedQuery<TransactionType> qTransactionType = this.em.createNamedQuery("TransactionType.findAll", TransactionType.class);
+            this.transactionTypeList = qTransactionType.getResultList();
+
+            return this.transactionTypeList;
+        } catch (NoResultException e) {
+            throw new NoTransactionsAvailableException();
+        }
+    }
+    
+
     public void delete(String parameter) {
 
-        System.out.println("delete(TransactionsManager) :"+parameter);
+        System.out.println("delete(TransactionsManager) :" + parameter);
         TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
         qTransactions.setParameter("ptrans", Integer.parseInt(parameter));
         Transactions transaction = qTransactions.getResultList().get(0);
         this.em.remove(transaction);
-        
+
     }
 }

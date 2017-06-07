@@ -19,6 +19,7 @@
         </header>
         <nav>
             <%@include file="menu.jsp" %>
+            
         </nav>
         <section>
             <table class="table table-bordered table-hover">

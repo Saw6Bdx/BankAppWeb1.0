@@ -10,8 +10,6 @@ import biz.exception.NoHolderAvailableException;
 import biz.exception.PasswordsNotIdenticalException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -27,9 +25,8 @@ public class HolderManager {
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
 
-    private List<Holder> holdersList = new ArrayList<>();
+    private List<Holder> holdersList = new ArrayList<Holder>();
 
-    @Lock(LockType.WRITE)
     public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation)
             throws LoginAlreadyExistingException, PasswordsNotIdenticalException {
 
@@ -53,18 +50,15 @@ public class HolderManager {
 
     }
 
-    @Lock(LockType.READ)
     private void getHolderFromDB() {
         TypedQuery<Holder> qHolder = this.em.createNamedQuery("Holder.findAll", Holder.class);
         this.holdersList = qHolder.getResultList();
     }
 
-    @Lock(LockType.READ)
+
     public List<Holder> displayHolder()
             throws NoHolderAvailableException {
-        System.out.println("displayHolder(HolderManager)");
         try {
-            System.out.println("test");
             TypedQuery<Holder> qHolders = this.em.createNamedQuery("Holder.findAll", Holder.class);
             this.holdersList = qHolders.getResultList();
 
@@ -73,5 +67,5 @@ public class HolderManager {
             throw new NoHolderAvailableException();
         }
     }
-    
+
 }

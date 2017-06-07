@@ -5,23 +5,22 @@ import biz.exception.NoAccountAvailableException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.Account;
+import model.AccountType;
 
 @Stateless
 public class AccountManager {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
-    private List<Account> accountList = new ArrayList();
+    private List<Account> accountList = new ArrayList<Account>();
+    private List<AccountType> accountTypeList = new ArrayList<AccountType>();
 
-    @Lock(LockType.WRITE)
     public Account save(String number, Date creationDate, double firstBalance, double overdraft)
             throws AccountAlreadyExistingException {
         for (Account account : this.accountList) {
@@ -34,7 +33,17 @@ public class AccountManager {
         return newAccount;
     }
 
-    @Lock(LockType.READ)
+    public List<Account> displayAccount() throws NoAccountAvailableException {
+        try {
+            TypedQuery<Account> qAccounts = this.em.createNamedQuery("Account.findAll", Account.class);
+            this.accountList = qAccounts.getResultList();
+
+            return this.accountList;
+        } catch (NoResultException e) {
+            throw new NoAccountAvailableException();
+        }
+    }
+
     public List<Account> displayAccount(int Id)
             throws NoAccountAvailableException {
         try {
@@ -48,7 +57,17 @@ public class AccountManager {
         }
     }
 
-    @Lock(LockType.READ)
+    public List<AccountType> displayAccountType() throws NoAccountAvailableException {
+        try {
+            TypedQuery<AccountType> qAccountType = this.em.createNamedQuery("AccountType.findAll", AccountType.class);
+            this.accountTypeList = qAccountType.getResultList();
+
+            return this.accountTypeList;
+        } catch (NoResultException e) {
+            throw new NoAccountAvailableException();
+        }
+    }
+
     public List<Account> getBalanceAccount(int Id)
             throws NoAccountAvailableException {
         try {
@@ -61,19 +80,19 @@ public class AccountManager {
             throw new NoAccountAvailableException();
         }
     }
-    
+
     public double getOverdraft(int Id) {
         TypedQuery<Account> qAccounts = this.em.createQuery("SELECT a FROM Account a WHERE a.id =:pid", Account.class);
         qAccounts.setParameter("pid", Id);
         return qAccounts.getResultList().get(0).getOverdraft();
     }
-    
+
     public double getFirstBalance(int Id) {
         TypedQuery<Account> qAccounts = this.em.createQuery("SELECT a FROM Account a WHERE a.id =:pid", Account.class);
         qAccounts.setParameter("pid", Id);
         return qAccounts.getResultList().get(0).getFirstBalance();
     }
-    
+
     public double[] sumTransactionsByAccount(List<Account> accountList) {
 
         double[] sum = new double[accountList.size()];
