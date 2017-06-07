@@ -26,6 +26,7 @@ public class HolderManager {
     private EntityManager em;
 
     private List<Holder> holdersList = new ArrayList<Holder>();
+    private List<Postcode> postcodesList = new ArrayList<Postcode>();
 
     public void createUser(Holder holder, Address address, Postcode postcode, String pwdConfirmation)
             throws LoginAlreadyExistingException, PasswordsNotIdenticalException {
@@ -33,7 +34,7 @@ public class HolderManager {
         getHolderFromDB();
 
         // Check if the login is already used
-        for (Holder hldr : holdersList) {
+        for (Holder hldr : this.holdersList) {
             if (hldr.getLogin().equals(holder.getLogin())) {
                 throw new LoginAlreadyExistingException();
             }
@@ -43,10 +44,23 @@ public class HolderManager {
         if (!holder.getPassword().equals(pwdConfirmation)) {
             throw new PasswordsNotIdenticalException();
         }
+
         // Check if the postcode and the city already exist in the database
+        getPostcodeFromDB();
+        boolean flagPostcode = false;
+        for (Postcode pc : this.postcodesList) {
+            if (pc.getPostcode() == postcode.getPostcode()) {
+                address.setIdPostcode(pc);
+                flagPostcode = true;
+            }
+        }
+        if (!flagPostcode) {
+            this.em.persist(postcode);
+        }
+        
+        // Creation of the user
         this.em.persist(holder);
         this.em.persist(address);
-        this.em.persist(postcode);
 
     }
 
@@ -55,18 +69,23 @@ public class HolderManager {
         this.holdersList = qHolder.getResultList();
     }
 
+    private void getPostcodeFromDB() {
+        TypedQuery<Postcode> qPostcode = this.em.createNamedQuery("Postcode.findAll", Postcode.class);
+        this.postcodesList = qPostcode.getResultList();
+    }
+
     public List<String> getLoginList() {
         TypedQuery<String> qLogin = this.em.createQuery("SELECT h.login FROM Holder h", String.class);
         List<String> loginList = qLogin.getResultList();
         return loginList;
     }
-    
+
     public List<Holder> getHolderWithLogin(String login) {
         TypedQuery<Holder> qHolder = this.em.createQuery("SELECT h FROM Holder h WHERE h.login =:login", Holder.class);
         List<Holder> holderList = qHolder.setParameter("login", login).getResultList();
         return holderList;
     }
-    
+
     public List<Holder> displayHolder()
             throws NoHolderAvailableException {
         try {

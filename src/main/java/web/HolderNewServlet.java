@@ -23,7 +23,6 @@ import model.Postcode;
  *
  * @author Guest
  */
-//@WebServlet({"/userCreation", "/index.html"})
 @WebServlet({"/userCreation"})
 public class HolderNewServlet extends HttpServlet {
 
