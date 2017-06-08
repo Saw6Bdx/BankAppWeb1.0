@@ -61,26 +61,39 @@ public class BankNewServlet extends HttpServlet {
 			// ... postcode
 			Postcode postcode = new Postcode(null, Integer.parseInt(req.getParameter("agencyPostCode")),
 					req.getParameter("agencyCity"));
+			
+			System.out.println("PC : " + postcode.getId());
 
 			// ... address
 			Address address = new Address(null, req.getParameter("agencyAddressLine1"));
 			address.setLine2(req.getParameter("agencyAddressLine2"));
 			address.setIdPostcode(postcode);
+			
+
+			System.out.println("add : " + address.getId());
 
 			// ...bank
 			Bank bank = new Bank(Integer.parseInt(req.getParameter("bankId")));
 
+			System.out.println("bk : " + bank.getId());
+			
 			// ...agency
 			Agency agency = new Agency(null, req.getParameter("agencyName"), req.getParameter("agencyCode"));
 			agency.setIdAddress(address);
 			agency.setIdBank(bank);
+			
+
+			System.out.println("age : " + agency.getId());
 
 			// ...accountManager
 			AccountManager accountManager = new AccountManager(null, req.getParameter("managerName"),
 					req.getParameter("managerFirstName"), assignmentDate);
 			accountManager.setIdAgency(agency);
+			
 
-			this.bankManager.createBank(bank, agency, accountManager, address, postcode);
+			System.out.println("am : " + accountManager.getId());
+
+			this.bankManager.createBank(agency, accountManager, address, postcode);
 
 			resp.sendRedirect(req.getContextPath() + "/");
 		} else {

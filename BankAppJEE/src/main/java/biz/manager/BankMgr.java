@@ -25,11 +25,12 @@ public class BankMgr {
 	private List<Bank> bankList = new ArrayList<Bank>();
 
 	@Lock(LockType.WRITE)
-	public void createBank(Bank bank, Agency agency, AccountManager accountManager, Address address, Postcode postcode) {
+	public void createBank(Agency agency, AccountManager accountManager, Address address, Postcode postcode) {
 
-		this.em.persist(bank);
-		this.em.persist(agency);
 		this.em.persist(accountManager);
+		this.em.persist(agency);
+		this.em.persist(address);
+		this.em.persist(postcode);
 	}
 
 	@Lock(LockType.READ)
