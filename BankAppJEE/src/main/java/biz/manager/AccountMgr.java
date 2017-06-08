@@ -1,7 +1,6 @@
 package biz.manager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Lock;
@@ -12,7 +11,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import biz.exception.AccountAlreadyExistingException;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
@@ -22,7 +20,7 @@ import model.Agency;
 import model.CountryCode;
 
 @Stateless
-public class AccountManager
+public class AccountMgr
 {
   @PersistenceContext(unitName="BankAppPU")
   private EntityManager em;
@@ -39,21 +37,6 @@ public class AccountManager
 	  this.em.persist(bank);
 	  this.em.persist(accountManager);*/
 
-  }
-  
-  
-  @Lock(LockType.WRITE)
-  public Account save(Integer Id, String number, Date creationDate, double firstBalance, double overdraft)
-    throws AccountAlreadyExistingException
-  {
-    for (Account account : this.accountList) {
-      if (account.getNumber().equals(number)) {
-        throw new AccountAlreadyExistingException();
-      }
-    }
-    Account newAccount = new Account(null, number, creationDate, firstBalance, overdraft);
-    this.em.persist(newAccount);
-    return newAccount;
   }
   
   @Lock(LockType.READ)

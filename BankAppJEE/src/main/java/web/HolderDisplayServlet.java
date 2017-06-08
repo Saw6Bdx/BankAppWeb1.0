@@ -1,7 +1,7 @@
 package web;
 
 import biz.exception.NoHolderAvailableException;
-import biz.manager.HolderManager;
+import biz.manager.HolderMgr;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +22,7 @@ public class HolderDisplayServlet
 {
   private static final long serialVersionUID = 1L;
   @EJB
-  HolderManager holderManager;
+  HolderMgr holderManager;
   
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException

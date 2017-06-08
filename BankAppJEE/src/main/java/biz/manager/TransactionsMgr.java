@@ -16,7 +16,7 @@ import model.TransactionType;
 import model.Transactions;
 
 @Stateless
-public class TransactionsManager
+public class TransactionsMgr
 {
   @PersistenceContext(unitName="BankAppPU")
   private EntityManager em;

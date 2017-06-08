@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
-import biz.manager.AccountManager;
+import biz.manager.AccountMgr;
 import model.Account;
 import model.AccountType;
 import model.Agency;
@@ -31,7 +31,7 @@ public class AccountNewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	AccountManager accountManager;
+	AccountMgr accountManager;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	

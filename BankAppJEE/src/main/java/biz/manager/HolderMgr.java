@@ -19,7 +19,7 @@ import model.Holder;
 import model.Postcode;
 
 @Stateless
-public class HolderManager
+public class HolderMgr
 {
   @PersistenceContext(unitName="BankAppPU")
   private EntityManager em;

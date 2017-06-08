@@ -19,6 +19,7 @@
         <nav>
             <a href='<c:url value="/holderDisplay"></c:url>'>Change user</a>
             <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${holder.id}"/></c:url>'><c:out value="${holder}"/>New Account</a>
+            <a href='<c:url value="/bankCreation"></c:url>'>New Bank</a>
         </nav>
         <c:choose>
             <c:when test="${error eq 'no.account.available'}">

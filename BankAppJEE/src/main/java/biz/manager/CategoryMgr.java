@@ -19,7 +19,7 @@ import model.Category;
 import model.Transactions;
 
 @Stateless
-public class CategoryManager {
+public class CategoryMgr {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;
@@ -30,7 +30,7 @@ public class CategoryManager {
     double sum = 0.0;
     double[] tabSumCategory;
 
-    public CategoryManager() {
+    public CategoryMgr() {
     }
 
     public void save(String label) throws CategoryAlreadyExistingException {
