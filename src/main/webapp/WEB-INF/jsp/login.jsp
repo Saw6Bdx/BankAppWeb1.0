@@ -17,7 +17,7 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
+            <!--<%@include file="menu.jsp" %>-->
         </nav>
         <form class="form-inline form-horizontal" 
               method="post" 

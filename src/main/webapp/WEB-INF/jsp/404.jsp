@@ -7,10 +7,10 @@
 <title>404</title>
 </head>
 <body>
-	<p>Désolé, la page n'existe plus...</p>
+	<p>Sorry, this web page does not exist anymore...</p>
 	<nav>
 		<ul>
-			<li><a href="<c:url value="/"/>">Retour à l'accueil</a></li>
+			<li><a href="<c:url value="/"/>">Back home</a></li>
 		</ul>
 	</nav>
 
