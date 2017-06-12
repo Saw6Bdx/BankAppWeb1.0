@@ -5,7 +5,7 @@
  */
 package web;
 
-import biz.manager.TransactionsManager;
+import biz.manager.TransactionsMgr;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ public class TransactionsDeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    TransactionsManager transactionsManager;
+    TransactionsMgr transactionsManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

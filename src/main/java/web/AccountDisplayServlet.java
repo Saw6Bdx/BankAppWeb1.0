@@ -1,7 +1,7 @@
 package web;
 
 import biz.exception.NoAccountAvailableException;
-import biz.manager.AccountManager;
+import biz.manager.AccountMgr;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,7 +20,7 @@ public class AccountDisplayServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    AccountManager accountManager;
+    AccountMgr accountManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

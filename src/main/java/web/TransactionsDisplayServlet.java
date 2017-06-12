@@ -6,8 +6,8 @@
 package web;
 
 import biz.exception.NoTransactionsAvailableException;
-import biz.manager.AccountManager;
-import biz.manager.TransactionsManager;
+import biz.manager.AccountMgr;
+import biz.manager.TransactionsMgr;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,10 +30,10 @@ public class TransactionsDisplayServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    TransactionsManager transactionsManager;
+    TransactionsMgr transactionsManager;
 
     @EJB
-    AccountManager accountManager;
+    AccountMgr accountManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -22,7 +22,7 @@ import model.Postcode;
 import static utils.Password.get_SHA_512_SecurePassword;
 
 @Stateless
-public class HolderManager {
+public class HolderMgr {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;

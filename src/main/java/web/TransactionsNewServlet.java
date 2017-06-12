@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoCategoriesAvailableException;
 import biz.exception.NoTransactionsAvailableException;
-import biz.manager.AccountManager;
-import biz.manager.CategoryManager;
-import biz.manager.TransactionsManager;
+import biz.manager.AccountMgr;
+import biz.manager.CategoryMgr;
+import biz.manager.TransactionsMgr;
 import model.Account;
 import model.Category;
 import model.TransactionType;
@@ -33,11 +33,11 @@ public class TransactionsNewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	TransactionsManager transactionsManager;
+	TransactionsMgr transactionsManager;
 	@EJB
-	AccountManager accountManager;
+	AccountMgr accountManager;
 	@EJB
-	CategoryManager categoryManager;
+	CategoryMgr categoryManager;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

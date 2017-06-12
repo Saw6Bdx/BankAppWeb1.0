@@ -6,3 +6,4 @@
 <a href='<c:url value="/holderDisplay"/>'>Change user</a>
 <a href='<c:url value="/transactionsCreation"><c:param name="accountId" value="${account.id}"/></c:url>'><c:out value="${account}"/>New Transaction</a>
 <a href='<c:url value="/userCreation"></c:url>'>New user</a>
+<a href='<c:url value="/bankCreation"></c:url>'>New Bank</a>

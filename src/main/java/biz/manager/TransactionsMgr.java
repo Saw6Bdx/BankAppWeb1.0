@@ -7,10 +7,7 @@ package biz.manager;
 
 import biz.exception.NoTransactionsAvailableException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -24,7 +21,7 @@ import model.Transactions;
  * @author Guest
  */
 @Stateless
-public class TransactionsManager {
+public class TransactionsMgr {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager em;

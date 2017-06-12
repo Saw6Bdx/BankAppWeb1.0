@@ -17,7 +17,7 @@ import org.junit.Test;
 public class AccountManagerTest extends EjbContainerTest {
     
     @EJB
-    AccountManager am;
+    AccountMgr am;
 
     @Test
     public void saveNewAccount() throws Exception {

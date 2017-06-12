@@ -5,7 +5,7 @@
  */
 package web;
 
-import biz.manager.CategoryManager;
+import biz.manager.CategoryMgr;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ public class CategoryDeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    CategoryManager categoryManager;
+    CategoryMgr categoryManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

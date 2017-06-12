@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
 @Stateless
-public class CountryCodeManager {
+public class CountryCodeMgr {
 
     @PersistenceContext(unitName = "BankAppPU")
     private EntityManager entityManager;

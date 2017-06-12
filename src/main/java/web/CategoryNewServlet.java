@@ -1,7 +1,7 @@
 package web;
 
 import biz.exception.CategoryAlreadyExistingException;
-import biz.manager.CategoryManager;
+import biz.manager.CategoryMgr;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ public class CategoryNewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private CategoryManager categoryManager;
+    private CategoryMgr categoryManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

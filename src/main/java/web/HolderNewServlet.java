@@ -7,7 +7,7 @@ package web;
 
 import biz.exception.LoginAlreadyExistingException;
 import biz.exception.PasswordsNotIdenticalException;
-import biz.manager.HolderManager;
+import biz.manager.HolderMgr;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -31,7 +31,7 @@ public class HolderNewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    HolderManager holderManager;
+    HolderMgr holderManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -3,7 +3,7 @@ package web;
 import biz.exception.CategoryAlreadyExistingException;
 import biz.exception.NoCategoriesAvailableException;
 import biz.exception.NoTransactionsAvailableException;
-import biz.manager.CategoryManager;
+import biz.manager.CategoryMgr;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ public class CategoriesDisplayServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private CategoryManager categoryManager;
+    private CategoryMgr categoryManager;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
