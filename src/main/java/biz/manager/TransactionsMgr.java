@@ -7,6 +7,7 @@ package biz.manager;
 
 import biz.exception.NoTransactionsAvailableException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -99,7 +100,7 @@ public class TransactionsMgr {
 
     }
 
-    public void modify(String Id, String date, String label, String amount, String idCategory) {
+    public void modify(String Id, Date date, String label, String amount, String idCategory) {
         
         TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
         qTransactions.setParameter("ptrans", Integer.parseInt(Id));
@@ -109,7 +110,7 @@ public class TransactionsMgr {
                 Integer.parseInt(Id), 
                 label, 
                 Double.parseDouble(amount), 
-                transaction.getDate(),
+                date,
                 transaction.getEndDate()
         );
         
