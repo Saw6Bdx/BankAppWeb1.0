@@ -93,8 +93,15 @@
                                 <c:out value="${transaction.idCategory}"/>
                             </td>
                             <td>
+                                <fmt:setLocale value="en_US" />
+                                <fmt:formatDate value="${transaction.date}" pattern="dd" var="transactionDay" />
+                                <fmt:formatDate value="${transaction.date}" pattern="MMMM" var="transactionMonth" />
+                                <fmt:formatDate value="${transaction.date}" pattern="yyyy" var="transactionYear" />
                                 <a href='<c:url value="/modifyTransaction">
                                        <c:param name = "transactionId" value="${transaction.id}"/>
+                                       <c:param name = "transactionDay" value="${transactionDay}" />
+                                       <c:param name = "transactionMonth" value="${transactionMonth}" />
+                                       <c:param name = "transactionYear" value="${transactionYear}" />
                                        <c:param name = "transactionDate" value="${transaction.date}"/>
                                        <c:param name = "transactionLabel" value="${transaction.label}"/>
                                        <c:param name = "transactionAmount" value="${transaction.amount}"/>
