@@ -117,4 +117,11 @@ public class TransactionsMgr {
         this.em.merge(trans);
         
     }
+
+    public Date getEndDate(int Id) {
+        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:pid",Transactions.class);
+        qTransactions.setParameter("pid",Id);
+        return qTransactions.getResultList().get(0).getEndDate();
+    }
+    
 }

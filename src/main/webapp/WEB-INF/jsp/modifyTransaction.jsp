@@ -65,6 +65,49 @@
                     </select>  
                 </div><br/><br/>
                 <div class="form-group">
+                    End date
+                    <select name="transactionEndDay" class="form-control" 
+                            value="<c:out value="${transactionEndDay}"/>">
+                        <c:forEach var="i" begin="1" end="31">
+                            <c:choose>
+                                <c:when test = "${i == transactionEndDay}">
+                                    <option select  ed="selected"><c:out value ="${i}">${i}</c:out></option>
+                                </c:when>
+                                <c:when test = "${i != transactionEndDay}">
+                                    <option><c:out value ="${i}">${i}</c:out></option>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </select>       
+                    <select name="transactionEndMonth" class="form-control" 
+                            value="<c:out value="${transactionEndMonth}"/>">
+                        <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
+                            <c:choose>
+                                <c:when test = "${month == transactionEndMonth}">
+                                    <option selected="selected"><c:out value="${month}"/></option>
+                                </c:when>
+                                <c:when test = "${month != transactionEndMonth}">
+                                    <option><c:out value="${month}"/></option>
+                                </c:when>
+                            </c:choose>
+                        </c:forTokens>
+                    </select>
+                    <select name="transactionEndYear" class="form-control" 
+                            value="<c:out value="${transactionEndYear}"/>">
+                        <c:forEach var="i" begin="2015" end="2025">
+                            <c:choose>
+                                <c:when test = "${i == transactionEndYear}">
+                                    <option selected="selected"><c:out value ="${i}">${i}</c:out></option>
+                                </c:when>
+
+                                <c:when test = "${i != transactionEndYear}">
+                                    <option><c:out value ="${i}">${i}</c:out></option>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </select>  
+                </div><br/><br/>
+                <div class="form-group">
                     Label
                     <input class="form-control" type="txtLabel" name="transactionLabel" placeholder="Name" 
                            value="<c:out value="${param['transactionLabel']}"/>"/>

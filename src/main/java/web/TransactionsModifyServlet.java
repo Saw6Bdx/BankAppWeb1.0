@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -36,7 +37,17 @@ public class TransactionsModifyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            req.getRequestDispatcher("/WEB-INF/jsp/modifyTransaction.jsp").forward(req, resp);
+        Date endDate = this.transactionsManager.getEndDate(Integer.parseInt(req.getParameter("transactionId")));
+        DateFormat dfDay = new SimpleDateFormat("dd");
+        DateFormat dfMonth = new SimpleDateFormat("MMMM",Locale.ENGLISH);
+        DateFormat dfYear = new SimpleDateFormat("yyyy");
+        req.setAttribute("transactionEndDay", dfDay.format(endDate));
+        req.setAttribute("transactionEndMonth", dfMonth.format(endDate));
+        req.setAttribute("transactionEndYear", dfYear.format(endDate));
+        System.out.println(dfDay.format(endDate));
+        System.out.println(dfMonth.format(endDate));
+        System.out.println(dfYear.format(endDate));
+        req.getRequestDispatcher("/WEB-INF/jsp/modifyTransaction.jsp").forward(req, resp);
 
     }
 
@@ -44,8 +55,8 @@ public class TransactionsModifyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         Date transactionDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("transactionYear")),
-					req.getParameter("transactionMonth"), Integer.parseInt(req.getParameter("transactionDay")));
-        
+                req.getParameter("transactionMonth"), Integer.parseInt(req.getParameter("transactionDay")));
+
         if (req.getParameter("yesBtn") != null) {
             this.transactionsManager.modify(req.getParameter("transactionId"),
                     transactionDate,
