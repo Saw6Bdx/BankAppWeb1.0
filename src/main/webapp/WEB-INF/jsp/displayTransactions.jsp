@@ -18,7 +18,17 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
+            <a href='<c:url value="/accountDisplay"><c:param name="holderId" value="${param['holderId']}"/></c:url>' title="Back to home page">
+                Home</a>
+            <a href='<c:url value="/transactionsCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>'><c:out value="${account}"/>
+                New Transaction</a>
+            <a href='<c:url value="/displayCategories"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' 
+               title="display transactions by categorie">
+                Categories</a>
+            <a href='<c:url value="/categoryCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Add a new category">
+                New category</a>
+            <a href="index.html">
+                Disconnect</a>
         </nav>
         <section>
             <table class="table table-bordered table-hover">
@@ -93,8 +103,15 @@
                                 <c:out value="${transaction.idCategory}"/>
                             </td>
                             <td>
+                                <fmt:setLocale value="en_US" />
+ +                              <fmt:formatDate value="${transaction.date}" pattern="dd" var="transactionDay" />
+ +                              <fmt:formatDate value="${transaction.date}" pattern="MMMM" var="transactionMonth" />
+ +                              <fmt:formatDate value="${transaction.date}" pattern="yyyy" var="transactionYear" />
                                 <a href='<c:url value="/modifyTransaction">
                                        <c:param name = "transactionId" value="${transaction.id}"/>
+                                       <c:param name = "transactionDay" value="${transactionDay}" />
+ +                                     <c:param name = "transactionMonth" value="${transactionMonth}" />
+ +                                     <c:param name = "transactionYear" value="${transactionYear}" />
                                        <c:param name = "transactionDate" value="${transaction.date}"/>
                                        <c:param name = "transactionLabel" value="${transaction.label}"/>
                                        <c:param name = "transactionAmount" value="${transaction.amount}"/>

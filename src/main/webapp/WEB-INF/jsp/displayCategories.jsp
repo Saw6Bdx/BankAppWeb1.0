@@ -18,7 +18,12 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
+            <a href='<c:url value="/accountDisplay"><c:param name="holderId" value="${param['holderId']}"/></c:url>' title="Back to home page">
+                Home</a>
+            <a href='<c:url value="/categoryCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Add a new category">
+                New category</a>
+            <a href="index.html">
+                Disconnect</a>
         </nav>
         <section>
             <table class="table table-bordered table-hover">

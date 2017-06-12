@@ -87,10 +87,10 @@ public class HolderNewServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/createUser.jsp").forward(req, resp);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/account");
+            resp.sendRedirect(req.getContextPath() + "/index.html");
         } else {
             // REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-            resp.sendRedirect(req.getContextPath() + "/account");
+            resp.sendRedirect(req.getContextPath() + "/index.html");
         }
 
     }

@@ -17,7 +17,6 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
         </nav>
         <form class="form-inline" method="post" action="page de traitement">
 
@@ -59,8 +58,9 @@
                 Description : 
                 <textarea class="form-control" name="description" rows="1" cols="30" placeholder="Description (optional)" maxlength="150" style="text-align: center" value="<c:out value="${param['description']}"/>"></textarea></div><br/><br/>
            
+            <a class="btn btn-primary btn-xs" href='<c:url value="/accountDisplay"><c:param name="holderId" value="${param['holderId']}"/></c:url>' title="Back to home page">
+                Cancel</a>
             <input class="btn btn-primary" type="button" name="ApplyBtn" value="Apply"/>
-            <input class="btn btn-primary btn-xs" type="button" name="CancelBtn" value="Cancel"/>
         </form><br/><br/>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
