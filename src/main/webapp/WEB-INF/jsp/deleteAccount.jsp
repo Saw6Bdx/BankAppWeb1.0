@@ -10,7 +10,7 @@
             <%@include file="../style.css" %>
         </style>
         <meta charset="utf-8">
-        <title>BankApp - Transactions</title>
+        <title>BankApp - Account</title>
     </head>
     <body>
         <header id="banniere" class="header">
@@ -18,15 +18,16 @@
             <h2>BankApp</h2>
         </header>
         <section>
-            <form action="<c:url value="/deleteTransaction">
-                      <c:param name="holderId" value="${param['holderId']}"/>
-                      <c:param name="accountId" value="${param['accountId']}"/>
-                      <c:param name = "transactionId" value="${param['transactionId']}"/>
+            <form action="<c:url value="/deleteAccount">
+                      <c:param name = "holderId" value="${param['holderId']}"/>
+                      <c:param name = "accountId" value="${param['accountId']}"/>
                   </c:url>" method="post">
-                <label>Are you sure you want to delete this transaction <c:out value="${param['transactionLabel']}"/> ?</label>
-                <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay">
+                <label>Are you sure you want to delete this account <c:out value="${account.number}"/> ?</label>
+                </br>
+                <input class="btn btn-primary btn-xs" type="submit" name="noBtn" value="No" />
+                <input class="btn btn-primary btn-xs" type="submit" name="yesBtn" value="Yes" />
+                <a class="btn btn-primary btn-xs" href='<c:url value="/accountDisplay">
                        <c:param name="holderId" value="${param['holderId']}"/>
-                       <c:param name="accountId" value="${param['accountId']}"/>
                    </c:url>' title="Back to home page">
                     No</a>
                 <input class="btn btn-primary btn-xs" type="submit" name="yesBtn" value="Yes"/>

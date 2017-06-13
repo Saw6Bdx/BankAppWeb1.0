@@ -22,32 +22,32 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/deleteTransaction")
 public class TransactionsDeleteServlet extends HttpServlet {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     @EJB
     TransactionsMgr transactionsManager;
-
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        
         req.getRequestDispatcher("/WEB-INF/jsp/deleteTransaction.jsp").forward(req, resp);
-
+        
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        if (req.getParameter("yesBtn") != null) {
-            try {
-                this.transactionsManager.delete(req.getParameter("transactionId"));
-            } catch (IllegalStateException ex) {
-                Logger.getLogger(TransactionsDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            this.transactionsManager.delete(req.getParameter("transactionId"));
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(TransactionsDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        resp.sendRedirect(req.getContextPath() + "/transactions");
+        resp.sendRedirect(req.getContextPath() 
+                + "/transactionsDisplay?holderId=" + req.getParameter("holderId")
+                + "&accountId=" + req.getParameter("accountId"));
         
     }
-
+    
 }

@@ -152,4 +152,16 @@ public class AccountMgr {
         }
         return sum;
     }
+
+    public void delete(int Id) {
+        Account account = getAccount(Id);
+        this.em.remove(account);
+    }
+
+    public Account getAccount(int Id) {
+        TypedQuery<Account> qAccount = this.em.createNamedQuery("Account.findById", Account.class);
+        qAccount.setParameter("id", Id);
+        return qAccount.getResultList().get(0);
+    }
+
 }
