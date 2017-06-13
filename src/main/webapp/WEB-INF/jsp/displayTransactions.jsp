@@ -19,26 +19,26 @@
         </header>
         <nav>
             <a href='<c:url value="/accountDisplay"><c:param name="holderId" value="${param['holderId']}"/></c:url>' title="Back to home page">
-                Home</a>
-            <a href='<c:url value="/transactionsCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>'><c:out value="${account}"/>
-                New Transaction</a>
-            <a href='<c:url value="/displayCategories"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' 
-               title="display transactions by categorie">
-                Categories</a>
-            <a href='<c:url value="/categoryCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Add a new category">
-                New category</a>
-            <a href="index.html">
-                Disconnect</a>
-        </nav>
-        <section>
-            <table class="table table-bordered table-hover">
-                <form class="form-inline form-horizontal" 
-                      method="post" 
-                      action="<c:url value="/transactionsDisplay">
-                          <c:param name = "accountId" value="${accountId}"/>
-                          <c:param name = "overdraft" value="${overdraft}"/>
-                          <c:param name = "firstBalance" value="${firstBalance}"/>
-                      </c:url>">
+                    Home</a>
+                <a href='<c:url value="/transactionsCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>'><c:out value="${account}"/>
+                    New Transaction</a>
+                <a href='<c:url value="/displayCategories"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' 
+                   title="display transactions by categorie">
+                    Categories</a>
+                <a href='<c:url value="/categoryCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Add a new category">
+                    New category</a>
+                <a href="index.html">
+                    Disconnect</a>
+            </nav>
+            <section>
+                <table class="table table-bordered table-hover">
+                    <form class="form-inline form-horizontal" 
+                          method="post" 
+                          action="<c:url value="/transactionsDisplay">
+                        <c:param name = "accountId" value="${accountId}"/>
+                        <c:param name = "overdraft" value="${overdraft}"/>
+                        <c:param name = "firstBalance" value="${firstBalance}"/>
+                    </c:url>">
                     <tr>
                         <th>Date 
                             <button type="submit" name="sortDateDown" class="btn btn-default btn-xs">
@@ -104,6 +104,8 @@
                             </td>
                             <td>
                                 <a href='<c:url value="/modifyTransaction">
+                                       <c:param name = "holderId" value="${param['holderId']}"/>
+                                       <c:param name = "accountId" value="${param['accountId']}"/>
                                        <c:param name = "transactionId" value="${transaction.id}"/>
                                    </c:url>' 
                                    title=""> <img src="img/edit.png" alt="croix" title="Modify a transaction"/> </a>

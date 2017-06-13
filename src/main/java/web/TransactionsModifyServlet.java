@@ -67,7 +67,9 @@ public class TransactionsModifyServlet extends HttpServlet {
             );
         }
 
-        req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath()
+                + "/transactionsDisplay?holderId=" + req.getParameter("holderId")
+                + "&accountId=" + req.getParameter("accountId"));
 
     }
 
