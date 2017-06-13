@@ -42,7 +42,7 @@ public class TransactionsNewServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			List<Account> accountList = this.accountManager.displayAccount();
+			List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
 			req.setAttribute("accountList", accountList);
 			List<TransactionType> transactionTypeList = this.transactionsManager.displayTransactionType();
 			req.setAttribute("transactionTypeList", transactionTypeList);
@@ -91,6 +91,7 @@ public class TransactionsNewServlet extends HttpServlet {
 			// ...transactions
 			Transactions transactions = new Transactions(null, req.getParameter("label"),
 					Double.parseDouble(req.getParameter("amount")), creationDate, endDate);
+			transactions.setComment(req.getParameter("comment"));
 			transactions.setIdAccount(account);
 			transactions.setIdTransactionType(transactionType);
 			transactions.setIdCategory(category);
