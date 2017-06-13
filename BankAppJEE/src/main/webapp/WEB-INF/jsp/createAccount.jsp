@@ -18,7 +18,7 @@
         </header>
         <nav>
         </nav>
-        <form class="form-inline" method="post" action="<c:url value="/accountCreation"/>">
+        <form class="form-inline" method="post" action="<c:url value="/accountCreation"><c:param name="holderId" value="${param['holderId']}"/></c:url>">
 
             <fieldset><legend>New account</legend></fieldset>
             <div class="form-group">

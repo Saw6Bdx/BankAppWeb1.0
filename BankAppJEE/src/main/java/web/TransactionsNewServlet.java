@@ -97,10 +97,10 @@ public class TransactionsNewServlet extends HttpServlet {
 
 			this.transactionsManager.createTransactions(transactions);
 
-			resp.sendRedirect(req.getContextPath() + "/");
+			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
 		} else {
 			// REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-			resp.sendRedirect(req.getContextPath() + "/");
+			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
 		}
 	}
 

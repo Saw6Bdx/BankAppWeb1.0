@@ -1,7 +1,9 @@
 package web;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
+import biz.exception.NoHolderAvailableException;
 import biz.manager.AccountMgr;
+import biz.manager.HolderMgr;
 import model.Account;
 import model.AccountType;
 import model.Agency;
 import model.CountryCode;
+import model.Holder;
 import utils.DateUtils;
 
 /**
@@ -85,13 +90,29 @@ public class AccountNewServlet extends HttpServlet {
 			account.setIdCountryCode(countryCode);
 			account.setIdAgency(agency);
 			
+			// ... table ASSIGN (in Holder and Account classes)
+            /*EntityManager em = getMediator().createEntityManager();
+            TypedQuery<Holder> qHolder = em.createQuery("SELECT a FROM Holder a WHERE a.id=:pid", Holder.class);
+            qHolder.setParameter("pid", getFlagHolder());
+            Holder holderBdd = qHolder.getSingleResult();*/
+			
+			/*Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
+			
+            Collection<Holder> collHolder = new HashSet();
+			collHolder.add(holder);
+            account.setHolderCollection(collHolder);
+
+            Collection<Account> collAccount = new HashSet();
+            collAccount.add(account);
+            holder.setAccountCollection(collAccount);*/
+			
 
 			this.accountManager.createAccount(account);
 
-			resp.sendRedirect(req.getContextPath() + "/");
+			resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
 		} else {
 			// REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-			resp.sendRedirect(req.getContextPath() + "/");
+			resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
 		}
 	}
 

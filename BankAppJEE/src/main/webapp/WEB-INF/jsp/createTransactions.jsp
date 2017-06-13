@@ -17,26 +17,23 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <a href="displayHolder.jsp">Home</a>
-            <a href="displayAccount.jsp">Transactions List</a>
-            <a href="createTransactions.jsp">New Transaction</a>
         </nav>
-        <form class="form-inline" method="post" action="<c:url value="/transactionsCreation"/>">
+        <form class="form-inline" method="post" action="<c:url value="/transactionsCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>">
 
             <fieldset><legend>New Transaction</legend></fieldset><br/>
-            	<div class="form-group">
+            <div class="form-group">
                 Account : <select class="form-control" name="accountId">
-                <option value="0">Account...</option>
-            	<c:forEach items="${accountList}" var="account">
-			         <option value ="${account.id}">${account}</option>
-			    </c:forEach>
+                    <option value="0">Account...</option>
+                    <c:forEach items="${accountList}" var="account">
+                        <option value ="${account.id}">${account}</option>
+                    </c:forEach>
                 </select></div><br/><br/>
-                <div class="form-group">
+            <div class="form-group">
                 Transaction type : <select class="form-control" name="transactionTypeId">
-                <option value="0">Transaction type...</option>
-            	<c:forEach items="${transactionTypeList}" var="transactionType">
-			         <option value ="${transactionType.id}">${transactionType}</option>
-			    </c:forEach>
+                    <option value="0">Transaction type...</option>
+                    <c:forEach items="${transactionTypeList}" var="transactionType">
+                        <option value ="${transactionType.id}">${transactionType}</option>
+                    </c:forEach>
                 </select></div><br/><br/>     
             <div class="form-group">Label : <input class="form-control" type="text" name="label" placeholder="Label" value="<c:out value="${param['label']}"/>"></div><br/><br/>
             <div class="form-group">Amount : <input class="form-control" type="number" name="amount" step="0.01" placeholder="-200.00" style="text-align: right"> €</div><br/><br/>
@@ -57,8 +54,8 @@
                     <c:forEach var="i" begin="2015" end="2025">
                         <option><c:out value ="${i}">${i}</c:out></option>
                     </c:forEach>
-			    </select></div><br/><br/>
-			    <div class="form-group">End date : <select name="userEndDay" class="form-control">
+                </select></div><br/><br/>
+            <div class="form-group">End date : <select name="userEndDay" class="form-control">
                     <option value="0" selected="selected">Day...</option>
                     <c:forEach var="i" begin="1" end="31">
                         <option><c:out value ="${i}">${i}</c:out></option>
@@ -75,17 +72,17 @@
                     <c:forEach var="i" begin="2015" end="2025">
                         <option><c:out value ="${i}">${i}</c:out></option>
                     </c:forEach>
-			    </select></div><br/><br/>
-			    <div class="form-group">
-                Category : <select class="form-control" name="categoryId">
-                <option value="0">Category...</option>
-            	<c:forEach items="${categoryList}" var="category">
-			         <option value ="${category.id}">${category}</option>
-			    </c:forEach>
                 </select></div><br/><br/>
-			    <div class="form-group">
+            <div class="form-group">
+                Category : <select class="form-control" name="categoryId">
+                    <option value="0">Category...</option>
+                    <c:forEach items="${categoryList}" var="category">
+                        <option value ="${category.id}">${category}</option>
+                    </c:forEach>
+                </select></div><br/><br/>
+            <div class="form-group">
                 Description : <textarea class="form-control" name="description" rows="1" cols="30" placeholder="Description (optional)" maxlength="150"></textarea></div><br/><br/>
-            
+
             <!-- if we have time to implement periodic of transactions -->
             <!-- fieldset><div class="form-group"><label class="checkbox-inline">Periodic<input type="checkbox" name="cbPeriodicity"/></label></div><br/>
                 <div class="form-group"><label class="radio-inline">Monthly<input type="radio" name="rdPeriodUnit" checked="checked" value="Mensuel"/></label>
@@ -94,7 +91,7 @@
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>
             <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="Cancel"/>
         </form><br/><br/>
-        
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
