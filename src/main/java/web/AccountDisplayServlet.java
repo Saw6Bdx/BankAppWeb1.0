@@ -26,7 +26,7 @@ public class AccountDisplayServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
-            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("idHolder")));
+            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
             double[] sumTransactions = this.accountManager.sumTransactionsByAccount(accountList);
             
             req.setAttribute("accountList", accountList);

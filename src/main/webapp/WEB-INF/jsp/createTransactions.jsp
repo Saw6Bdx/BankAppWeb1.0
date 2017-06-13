@@ -17,9 +17,6 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <a href="displayHolder.jsp">Home</a>
-            <a href="displayAccount.jsp">Transactions List</a>
-            <a href="createTransactions.jsp">New Transaction</a>
         </nav>
         <form class="form-inline" method="post" action="<c:url value="/transactionsCreation"/>">
 

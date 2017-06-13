@@ -18,8 +18,10 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
-            <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${holder.id}"/></c:url>'><c:out value="${holder}"/>New Account</a>
+            <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${param['holderId']}"/></c:url>'><c:out value="${holder}"/>
+                New Account</a>
+            <a href="index.html">
+                Disconnect</a>
         </nav>
         <c:choose>
             <c:when test="${error eq 'no.account.available'}">
@@ -38,6 +40,7 @@
                     <tr>
                         <td>
                             <a href='<c:url value="/transactionsDisplay">
+                                   <c:param name="holderId" value="${param['holderId']}"/>
                                    <c:param name="accountId" value="${account.id}"/></c:url>'>
                                <c:out value="${account}"/></a>
                         </td>

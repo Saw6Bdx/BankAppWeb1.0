@@ -17,7 +17,6 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <!--<%@include file="menu.jsp" %>-->
         </nav>
         <form class="form-inline form-horizontal" 
               method="post" 
@@ -42,7 +41,8 @@
                 <input class="form-control" type="password" name="password" placeholder="********" 
                        value="<c:out value="${param['password']}"/>"/>
             </div><br/><br/>
-            <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="New user"/>
+            <a class="btn btn-primary btn-xs" href='<c:url value="/userCreation"/>' title="Create a new user account">
+                New user</a>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Log in"/>
         </form><br/><br/>
 
