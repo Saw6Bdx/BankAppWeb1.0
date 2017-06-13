@@ -20,6 +20,8 @@
         <section>
             <fmt:setLocale value="en_US" />
             <form class="form-inline" action="<c:url value="/modifyTransaction">
+                      <c:param name = "holderId" value="${param['holderId']}"/>
+                      <c:param name = "accountId" value="${param['accountId']}"/>
                       <c:param name = "transactionId" value="${transaction.id}"/>
                   </c:url>" method="post">
                 <div class="form-group">
@@ -87,7 +89,7 @@
                         <c:forEach items="${categoriesList}" var="category">
                             <option ${category == transaction.idCategory.label ? 'selected' : ''}>
                                 <c:out value="${category}">${category.id}</c:out>
-                            </option>
+                                </option>
                         </c:forEach>
                     </select>
                 </div><br/><br/>
