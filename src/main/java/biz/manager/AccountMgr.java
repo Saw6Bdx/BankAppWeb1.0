@@ -163,5 +163,11 @@ public class AccountMgr {
         qAccount.setParameter("id", Id);
         return qAccount.getResultList().get(0);
     }
+    
+    public Agency getAgency(int Id) {
+        TypedQuery<Agency> qAgency = this.em.createNamedQuery("Agency.findById", Agency.class);
+        qAgency.setParameter("id", Id);
+        return qAgency.getResultList().get(0);
+    }
 
 }
