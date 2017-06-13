@@ -19,10 +19,10 @@
         </header>
         <nav>
             <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${param['holderId']}"/></c:url>'><c:out value="${holder}"/>
-                New Account</a>
-            <a href="index.html">
-                Disconnect</a>
-        </nav>
+                    New Account</a>
+                <a href="index.html">
+                    Disconnect</a>
+            </nav>
         <c:choose>
             <c:when test="${error eq 'no.account.available'}">
                 No account registered&nbsp;!<br><br>
@@ -34,6 +34,8 @@
                 <tr>
                     <th>Account</th>
                     <th>Balance</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
                 </tr>
                 <c:set var="pos" value="${0}"/>
                 <c:forEach items="${accountList}" var="account">
@@ -46,6 +48,19 @@
                         </td>
                         <td>
                             <fmt:formatNumber type = "number" maxFractionDigits = "2" value="${account.firstBalance+sumTransactions[pos]}" /> €
+                        </td>
+                        <td>
+                            <a href='<c:url value="/modifyAccount">
+                                   <c:param name = "transactionId" value="${transaction.id}"/>
+                               </c:url>' 
+                               title=""> <img src="img/edit.png" alt="croix" title="Modify a transaction"/> </a>
+                        </td>
+                        <td>
+                            <a href='<c:url value="/deleteAccount">
+                                   <c:param name = "transactionId" value="${transaction.id}"/>
+                                   <c:param name = "transactionLabel" value="${transaction.label}"/>
+                               </c:url>' 
+                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
                         </td>
                     </tr>
                     <c:set var="pos" value="${pos + 1}" />
