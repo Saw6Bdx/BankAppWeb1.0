@@ -141,9 +141,6 @@
                     <p class="errorMsgColor">You are under your overdraft allowed of ${overdraft}€, please replenish your account&nbsp;!</p><br><br>
                 </c:when>
             </c:choose>
-
-            <a href='<c:url value="/displayCategories"/>' 
-               title="displayCategories">Categories</a>
         </section>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
