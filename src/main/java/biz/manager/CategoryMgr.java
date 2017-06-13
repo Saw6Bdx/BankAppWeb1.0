@@ -117,6 +117,7 @@ public class CategoryMgr {
     }
 
     public List<Category> getCategoriesList() {
+        setCategoryListFromDB();
         return this.categoriesList;
     }
 
@@ -158,6 +159,18 @@ public class CategoryMgr {
 
     private double round(double A, int B) {
         return (double) ((int) (A * Math.pow(10, B) + .5)) / Math.pow(10, B);
+    }
+
+    public Category getCategory(int Id) {
+        TypedQuery<Category> qCategory = this.em.createNamedQuery("Category.findById", Category.class);
+        qCategory.setParameter("id", Id);
+        return qCategory.getResultList().get(0);
+    }
+
+    public Category getCategory(String label) {
+        TypedQuery<Category> qCategory = this.em.createNamedQuery("Category.findByLabel", Category.class);
+        qCategory.setParameter("label", label);
+        return qCategory.getResultList().get(0);
     }
 
 }

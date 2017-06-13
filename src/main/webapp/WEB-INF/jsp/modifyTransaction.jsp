@@ -18,109 +18,78 @@
             <h2>BankApp</h2>
         </header>
         <section>
+            <fmt:setLocale value="en_US" />
             <form class="form-inline" action="<c:url value="/modifyTransaction">
-                      <c:param name = "transactionId" value="${param['transactionId']}"/>
+                      <c:param name = "transactionId" value="${transaction.id}"/>
                   </c:url>" method="post">
                 <div class="form-group">
                     Date
+                    <fmt:formatDate value="${transaction.date}" pattern="dd" var="transactionDay" />
+                    <fmt:formatDate value="${transaction.date}" pattern="MMMM" var="transactionMonth" />
+                    <fmt:formatDate value="${transaction.date}" pattern="yyyy" var="transactionYear" />
                     <select name="transactionDay" class="form-control" 
-                            value="<c:out value="${param['transactionDay']}"/>">
+                            value="<c:out value="${transactionDay}"/>">
                         <c:forEach var="i" begin="1" end="31">
-                            <c:choose>
-                                <c:when test = "${i == param['transactionDay']}">
-                                    <option selected="selected"><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                                <c:when test = "${i != param['transactionDay']}">
-                                    <option><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${i == transactionDay ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                         </c:forEach>
                     </select>       
                     <select name="transactionMonth" class="form-control" 
-                            value="<c:out value="${param['transactionMonth']}"/>">
+                            value="<c:out value="${transactionMonth}"/>">
                         <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
-                            <c:choose>
-                                <c:when test = "${month == param['transactionMonth']}">
-                                    <option selected="selected"><c:out value="${month}"/></option>
-                                </c:when>
-                                <c:when test = "${month != param['transactionMonth']}">
-                                    <option><c:out value="${month}"/></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${month == transactionMonth ? 'selected' : ''}><c:out value="${month}"/></option>
                         </c:forTokens>
                     </select>
                     <select name="transactionYear" class="form-control" 
-                            value="<c:out value="${param['transactionYear']}"/>">
+                            value="<c:out value="${transactionYear}"/>">
                         <c:forEach var="i" begin="2015" end="2025">
-                            <c:choose>
-                                <c:when test = "${i == param['transactionYear']}">
-                                    <option selected="selected"><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-
-                                <c:when test = "${i != param['transactionYear']}">
-                                    <option><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${i == transactionYear ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                         </c:forEach>
                     </select>  
                 </div><br/><br/>
                 <div class="form-group">
                     End date
+                    <fmt:formatDate value="${transaction.endDate}" pattern="dd" var="transactionEndDay" />
+                    <fmt:formatDate value="${transaction.endDate}" pattern="MMMM" var="transactionEndMonth" />
+                    <fmt:formatDate value="${transaction.endDate}" pattern="yyyy" var="transactionEndYear" />
                     <select name="transactionEndDay" class="form-control" 
                             value="<c:out value="${transactionEndDay}"/>">
                         <c:forEach var="i" begin="1" end="31">
-                            <c:choose>
-                                <c:when test = "${i == transactionEndDay}">
-                                    <option select  ed="selected"><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                                <c:when test = "${i != transactionEndDay}">
-                                    <option><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${i == transactionEndDay ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                         </c:forEach>
                     </select>       
                     <select name="transactionEndMonth" class="form-control" 
                             value="<c:out value="${transactionEndMonth}"/>">
                         <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
-                            <c:choose>
-                                <c:when test = "${month == transactionEndMonth}">
-                                    <option selected="selected"><c:out value="${month}"/></option>
-                                </c:when>
-                                <c:when test = "${month != transactionEndMonth}">
-                                    <option><c:out value="${month}"/></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${month == transactionEndMonth ? 'selected' : ''}><c:out value="${month}"/></option>
                         </c:forTokens>
                     </select>
                     <select name="transactionEndYear" class="form-control" 
                             value="<c:out value="${transactionEndYear}"/>">
                         <c:forEach var="i" begin="2015" end="2025">
-                            <c:choose>
-                                <c:when test = "${i == transactionEndYear}">
-                                    <option selected="selected"><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-
-                                <c:when test = "${i != transactionEndYear}">
-                                    <option><c:out value ="${i}">${i}</c:out></option>
-                                </c:when>
-                            </c:choose>
+                            <option ${i == transactionEndYear ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                         </c:forEach>
                     </select>  
                 </div><br/><br/>
                 <div class="form-group">
                     Label
                     <input class="form-control" type="txtLabel" name="transactionLabel" placeholder="Name" 
-                           value="<c:out value="${param['transactionLabel']}"/>"/>
+                           value="<c:out value="${transaction.label}"/>"/>
                 </div><br/><br/>
                 <div class="form-group">
                     Amount
-                    <input class="form-control" type="txtLabel" name="transactionAmount" placeholder="${param['']}" 
-                           value="<c:out value="${param['transactionAmount']}"/>"/>
+                    <input class="form-control" type="txtLabel" name="transactionAmount" 
+                           value="<c:out value="${transaction.amount}"/>"/>
                 </div><br/><br/>
                 <div class="form-group">
                     Category
-                    <input class="form-control" type="txtLabel" name="transactionIdCategory" placeholder="${param['']}" 
-                           value="<c:out value="${param['transactionIdCategory']}"/>"/>
+                    <select class="form-control" name="categoryLabel"
+                            value="<c:out value="${category}"/>">
+                        <c:forEach items="${categoriesList}" var="category">
+                            <option ${category == transaction.idCategory.label ? 'selected' : ''}>
+                                <c:out value="${category}">${category.id}</c:out>
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div><br/><br/>
                 <input class="btn btn-primary" type="submit" name="yesBtn" value="Modify"/>
                 <input class="btn btn-primary btn-xs" type="button" name="noBtn" value="Cancel"/>

@@ -5,21 +5,19 @@
  */
 package web;
 
+import biz.manager.CategoryMgr;
 import biz.manager.TransactionsMgr;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
+import model.Transactions;
 import utils.DateUtils;
 
 /**
@@ -34,19 +32,17 @@ public class TransactionsModifyServlet extends HttpServlet {
     @EJB
     TransactionsMgr transactionsManager;
 
+    @EJB
+    CategoryMgr categoryManager;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Date endDate = this.transactionsManager.getEndDate(Integer.parseInt(req.getParameter("transactionId")));
-        DateFormat dfDay = new SimpleDateFormat("dd");
-        DateFormat dfMonth = new SimpleDateFormat("MMMM",Locale.ENGLISH);
-        DateFormat dfYear = new SimpleDateFormat("yyyy");
-        req.setAttribute("transactionEndDay", dfDay.format(endDate));
-        req.setAttribute("transactionEndMonth", dfMonth.format(endDate));
-        req.setAttribute("transactionEndYear", dfYear.format(endDate));
-        System.out.println(dfDay.format(endDate));
-        System.out.println(dfMonth.format(endDate));
-        System.out.println(dfYear.format(endDate));
+        Transactions transaction = this.transactionsManager.getTransaction(
+                Integer.parseInt(req.getParameter("transactionId")));
+        List<Category> categoriesList = this.categoryManager.getCategoriesList();
+        req.setAttribute("transaction", transaction);
+        req.setAttribute("categoriesList", categoriesList);
         req.getRequestDispatcher("/WEB-INF/jsp/modifyTransaction.jsp").forward(req, resp);
 
     }
@@ -56,13 +52,18 @@ public class TransactionsModifyServlet extends HttpServlet {
 
         Date transactionDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("transactionYear")),
                 req.getParameter("transactionMonth"), Integer.parseInt(req.getParameter("transactionDay")));
+        Date transactionEndDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("transactionEndYear")),
+                req.getParameter("transactionEndMonth"), Integer.parseInt(req.getParameter("transactionEndDay")));
+        Category category = this.categoryManager.getCategory(req.getParameter("categoryLabel"));
 
         if (req.getParameter("yesBtn") != null) {
-            this.transactionsManager.modify(req.getParameter("transactionId"),
+            this.transactionsManager.modify(
+                    Integer.parseInt(req.getParameter("transactionId")),
                     transactionDate,
+                    transactionEndDate,
                     req.getParameter("transactionLabel"),
-                    req.getParameter("transactionAmount"),
-                    req.getParameter("transactionIdCategory")
+                    Double.parseDouble(req.getParameter("transactionAmount")),
+                    category
             );
         }
 

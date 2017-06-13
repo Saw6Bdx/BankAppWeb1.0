@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import model.Category;
 import model.TransactionType;
 import model.Transactions;
 
@@ -100,28 +101,25 @@ public class TransactionsMgr {
 
     }
 
-    public void modify(String Id, Date date, String label, String amount, String idCategory) {
-        
-        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:ptrans", Transactions.class);
-        qTransactions.setParameter("ptrans", Integer.parseInt(Id));
-        Transactions transaction = qTransactions.getResultList().get(0);
-        
+    public void modify(int Id, Date date, Date endDate, String label, double amount, Category category) {
+
         Transactions trans = new Transactions(
-                Integer.parseInt(Id), 
-                label, 
-                Double.parseDouble(amount), 
+                Id,
+                label,
+                amount,
                 date,
-                transaction.getEndDate()
+                endDate
         );
-        
+        trans.setIdCategory(category);
+
         this.em.merge(trans);
-        
+
     }
 
-    public Date getEndDate(int Id) {
-        TypedQuery<Transactions> qTransactions = this.em.createQuery("SELECT t FROM Transactions t WHERE t.id=:pid",Transactions.class);
-        qTransactions.setParameter("pid",Id);
-        return qTransactions.getResultList().get(0).getEndDate();
+    public Transactions getTransaction(int Id) {
+        TypedQuery<Transactions> qTransactions = this.em.createNamedQuery("Transactions.findById", Transactions.class);
+        qTransactions.setParameter("id", Id);
+        return qTransactions.getResultList().get(0);
     }
-    
+
 }
