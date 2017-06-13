@@ -91,12 +91,7 @@ public class AccountNewServlet extends HttpServlet {
 			account.setIdAgency(agency);
 			
 			// ... table ASSIGN (in Holder and Account classes)
-            /*EntityManager em = getMediator().createEntityManager();
-            TypedQuery<Holder> qHolder = em.createQuery("SELECT a FROM Holder a WHERE a.id=:pid", Holder.class);
-            qHolder.setParameter("pid", getFlagHolder());
-            Holder holderBdd = qHolder.getSingleResult();*/
-			
-			/*Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
+            Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
 			
             Collection<Holder> collHolder = new HashSet();
 			collHolder.add(holder);
@@ -104,7 +99,7 @@ public class AccountNewServlet extends HttpServlet {
 
             Collection<Account> collAccount = new HashSet();
             collAccount.add(account);
-            holder.setAccountCollection(collAccount);*/
+            holder.setAccountCollection(collAccount);
 			
 
 			this.accountManager.createAccount(account);
