@@ -18,12 +18,12 @@
         </header>
         <nav>
         </nav>
-        <form class="form-inline" method="post" action="<c:url value="/transactionsCreation"/>">
+        <form class="form-inline" method="post" action="<c:url value="/transactionsCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>">
 
-            <fieldset><legend>New Transaction</legend></fieldset><br/>
-            <div class="form-group">
-                Account : <select class="form-control" name="accountId">
-                    <option value="0">Account...</option>
+                <fieldset><legend>New Transaction</legend></fieldset><br/>
+                <div class="form-group">
+                    Account : <select class="form-control" name="accountId">
+                        <option value="0">Account...</option>
                     <c:forEach items="${accountList}" var="account">
                         <option value ="${account.id}">${account}</option>
                     </c:forEach>
