@@ -27,81 +27,74 @@ import utils.DateUtils;
  *
  * @author Guest
  */
-@WebServlet({ "/transactionsCreation" })
+@WebServlet({"/transactionsCreation"})
 public class TransactionsNewServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@EJB
-	TransactionsMgr transactionsManager;
-	@EJB
-	AccountMgr accountManager;
-	@EJB
-	CategoryMgr categoryManager;
+    @EJB
+    TransactionsMgr transactionsManager;
+    @EJB
+    AccountMgr accountManager;
+    @EJB
+    CategoryMgr categoryManager;
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			List<Account> accountList = this.accountManager.displayAccount();
-			req.setAttribute("accountList", accountList);
-			List<TransactionType> transactionTypeList = this.transactionsManager.displayTransactionType();
-			req.setAttribute("transactionTypeList", transactionTypeList);
-			List<Category> categoryList = this.categoryManager.displayCategories();
-			req.setAttribute("categoryList", categoryList);
-			req.getRequestDispatcher("/WEB-INF/jsp/createTransactions.jsp").forward(req, resp);
-		} catch (
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            List<Account> accountList = this.accountManager.displayAccount(Integer.parseInt(req.getParameter("holderId")));
+            req.setAttribute("accountList", accountList);
+            List<TransactionType> transactionTypeList = this.transactionsManager.displayTransactionType();
+            req.setAttribute("transactionTypeList", transactionTypeList);
+            List<Category> categoryList = this.categoryManager.displayCategories();
+            req.setAttribute("categoryList", categoryList);
+            req.getRequestDispatcher("/WEB-INF/jsp/createTransactions.jsp").forward(req, resp);
+        } catch (NoTransactionsAvailableException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoAccountAvailableException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoCategoriesAvailableException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
-		NoTransactionsAvailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoAccountAvailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoCategoriesAvailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
 
-		req.setCharacterEncoding("UTF-8");
+        Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
+                req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
+        Date endDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userEndYear")),
+                req.getParameter("userEndMonth"), Integer.parseInt(req.getParameter("userEndDay")));
 
-		if (req.getParameter("applyBtn") != null) {
+        // Creation of objects ...
+        // ...account
+        Account account = new Account(Integer.parseInt(req.getParameter("accountId")));
 
-			Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
-					req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
-			Date endDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userEndYear")),
-					req.getParameter("userEndMonth"), Integer.parseInt(req.getParameter("userEndDay")));
+        // ...transactionType
+        TransactionType transactionType = new TransactionType(Integer.parseInt(req.getParameter("transactionTypeId")));
 
-			// Creation of objects ...
-			// ...account
-			Account account = new Account(Integer.parseInt(req.getParameter("accountId")));
-			
-			// ...transactionType
-			TransactionType transactionType = new TransactionType(Integer.parseInt(req.getParameter("transactionTypeId")));
-			
-			// ...category
-			Category category = new Category(Integer.parseInt(req.getParameter("categoryId")));
+        // ...category
+        Category category = new Category(Integer.parseInt(req.getParameter("categoryId")));
 
-			// ...transactions
-			Transactions transactions = new Transactions(null, req.getParameter("label"),
-					Double.parseDouble(req.getParameter("amount")), creationDate, endDate);
-			transactions.setIdAccount(account);
-			transactions.setIdTransactionType(transactionType);
-			transactions.setIdCategory(category);
+        // ...transactions
+        Transactions transactions = new Transactions(null, req.getParameter("label"),
+                Double.parseDouble(req.getParameter("amount")), creationDate, endDate);
+        transactions.setComment(req.getParameter("comment"));
+        transactions.setIdAccount(account);
+        transactions.setIdTransactionType(transactionType);
+        transactions.setIdCategory(category);
 
-			this.transactionsManager.createTransactions(transactions);
+        this.transactionsManager.createTransactions(transactions);
 
-			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
-		} else {
-			// REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
-		}
-	}
+        resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
+    }
 
 }

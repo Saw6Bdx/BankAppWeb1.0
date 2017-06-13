@@ -24,6 +24,7 @@
                       <c:param name = "transactionId" value="${param['transactionId']}"/>
                   </c:url>" method="post">
                 <label>Are you sure you want to delete this transaction <c:out value="${param['transactionLabel']}"/> ?</label>
+                </br>
                 <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay">
                        <c:param name="holderId" value="${param['holderId']}"/>
                        <c:param name="accountId" value="${param['accountId']}"/>

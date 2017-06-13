@@ -24,8 +24,6 @@
                   </c:url>" method="post">
                 <label>Are you sure you want to delete this account <c:out value="${account.number}"/> ?</label>
                 </br>
-                <input class="btn btn-primary btn-xs" type="submit" name="noBtn" value="No" />
-                <input class="btn btn-primary btn-xs" type="submit" name="yesBtn" value="Yes" />
                 <a class="btn btn-primary btn-xs" href='<c:url value="/accountDisplay">
                        <c:param name="holderId" value="${param['holderId']}"/>
                    </c:url>' title="Back to home page">
