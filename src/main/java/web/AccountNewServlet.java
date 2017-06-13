@@ -66,46 +66,40 @@ public class AccountNewServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
 
-        if (req.getParameter("applyBtn") != null) {
+        Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
+                req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
 
-            Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
-                    req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
+        // Creation of objects ...
+        // ...accountType
+        AccountType accountType = new AccountType(Integer.parseInt(req.getParameter("accountTypeId")));
 
-            // Creation of objects ...
-            // ...accountType
-            AccountType accountType = new AccountType(Integer.parseInt(req.getParameter("accountTypeId")));
+        // ...countryCode
+        CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
 
-            // ...countryCode
-            CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
+        // ...category
+        Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
 
-            // ...category
-            Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
+        // ...transactions
+        Account account = new Account(null, req.getParameter("number"), creationDate,
+                Double.parseDouble(req.getParameter("firstBalance")), Double.parseDouble(req.getParameter("overdraft")));
+        account.setDescription(req.getParameter("description"));
+        account.setIdAccountType(accountType);
+        account.setIdCountryCode(countryCode);
+        account.setIdAgency(agency);
 
-            // ...transactions
-            Account account = new Account(null, req.getParameter("number"), creationDate,
-                    Double.parseDouble(req.getParameter("firstBalance")), Double.parseDouble(req.getParameter("overdraft")));
-            account.setIdAccountType(accountType);
-            account.setIdCountryCode(countryCode);
-            account.setIdAgency(agency);
+        // ... table ASSIGN (in Holder and Account classes)
+        Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
 
-            // ... table ASSIGN (in Holder and Account classes)
-            Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
+        Collection<Holder> collHolder = new HashSet();
+        collHolder.add(holder);
+        account.setHolderCollection(collHolder);
 
-            Collection<Holder> collHolder = new HashSet();
-            collHolder.add(holder);
-            account.setHolderCollection(collHolder);
+        Collection<Account> collAccount = new HashSet();
+        collAccount.add(account);
+        holder.setAccountCollection(collAccount);
 
-            Collection<Account> collAccount = new HashSet();
-            collAccount.add(account);
-            holder.setAccountCollection(collAccount);
+        this.accountManager.createAccount(account);
 
-            this.accountManager.createAccount(account);
-
-            resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
-        } else {
-            // REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-            resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
-        }
+        resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
     }
-
 }
