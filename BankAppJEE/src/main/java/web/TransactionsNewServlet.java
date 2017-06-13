@@ -71,8 +71,6 @@ public class TransactionsNewServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
-		if (req.getParameter("applyBtn") != null) {
-
 			Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
 					req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
 			Date endDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userEndYear")),
@@ -99,10 +97,6 @@ public class TransactionsNewServlet extends HttpServlet {
 			this.transactionsManager.createTransactions(transactions);
 
 			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
-		} else {
-			// REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-			resp.sendRedirect(req.getContextPath() + "/transactionsDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
-		}
 	}
 
 }
