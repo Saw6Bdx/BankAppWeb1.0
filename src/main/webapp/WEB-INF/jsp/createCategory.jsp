@@ -31,8 +31,9 @@
                     <p class="errorMsgColor">This category already exists&nbsp;!</p><br><br>
                 </c:when>
             </c:choose>
+            <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Back to home page">
+                Cancel</a>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>
-            <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="Cancel"/>
         </form><br/><br/>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

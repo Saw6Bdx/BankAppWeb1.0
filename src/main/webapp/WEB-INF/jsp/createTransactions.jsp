@@ -81,15 +81,16 @@
                     </c:forEach>
                 </select></div><br/><br/>
             <div class="form-group">
-                Description : <textarea class="form-control" name="description" rows="1" cols="30" placeholder="Description (optional)" maxlength="150"></textarea></div><br/><br/>
+                Comment : <textarea class="form-control" name="comment" rows="1" cols="30" placeholder="Comment (optional)" maxlength="150"></textarea></div><br/><br/>
 
             <!-- if we have time to implement periodic of transactions -->
             <!-- fieldset><div class="form-group"><label class="checkbox-inline">Periodic<input type="checkbox" name="cbPeriodicity"/></label></div><br/>
                 <div class="form-group"><label class="radio-inline">Monthly<input type="radio" name="rdPeriodUnit" checked="checked" value="Mensuel"/></label>
                     <label class="radio-inline">Weekly<input type="radio" name="rdPeriodUnit" value="Trimestriel"/></label>
                     <label class="radio-inline">Annual<input type="radio" name="rdPeriodUnit" value="Annuel"/></label></div></fieldset><br/-->
+            <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Back to home page">
+                Cancel</a>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>
-            <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="Cancel"/>
         </form><br/><br/>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

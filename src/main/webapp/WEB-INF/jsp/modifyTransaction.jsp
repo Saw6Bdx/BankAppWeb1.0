@@ -93,8 +93,9 @@
                         </c:forEach>
                     </select>
                 </div><br/><br/>
+                <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Back to home page">
+                Cancel</a>
                 <input class="btn btn-primary" type="submit" name="yesBtn" value="Modify"/>
-                <input class="btn btn-primary btn-xs" type="button" name="noBtn" value="Cancel"/>
             </form>
         </section>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
