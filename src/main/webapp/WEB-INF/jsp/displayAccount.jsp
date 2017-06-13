@@ -51,16 +51,15 @@
                         </td>
                         <td>
                             <a href='<c:url value="/modifyAccount">
-                                   <c:param name = "transactionId" value="${transaction.id}"/>
+                                   <c:param name = "accountId" value="${account.id}"/>
                                </c:url>' 
-                               title=""> <img src="img/edit.png" alt="croix" title="Modify a transaction"/> </a>
+                               title=""> <img src="img/edit.png" alt="croix" title="Modify an account"/> </a>
                         </td>
                         <td>
                             <a href='<c:url value="/deleteAccount">
-                                   <c:param name = "transactionId" value="${transaction.id}"/>
-                                   <c:param name = "transactionLabel" value="${transaction.label}"/>
+                                   <c:param name = "accountId" value="${account.id}"/>
                                </c:url>' 
-                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a transaction"/> </a>
+                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete an account"/> </a>
                         </td>
                     </tr>
                     <c:set var="pos" value="${pos + 1}" />

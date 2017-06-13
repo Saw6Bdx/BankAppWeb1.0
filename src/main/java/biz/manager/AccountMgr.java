@@ -152,4 +152,9 @@ public class AccountMgr {
         }
         return sum;
     }
+
+    public void delete(String parameter) {
+        System.out.println("to be completed ...");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
