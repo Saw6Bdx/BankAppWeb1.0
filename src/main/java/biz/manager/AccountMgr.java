@@ -153,8 +153,15 @@ public class AccountMgr {
         return sum;
     }
 
-    public void delete(String parameter) {
-        System.out.println("to be completed ...");
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(int Id) {
+        Account account = getAccount(Id);
+        this.em.remove(account);
     }
+
+    public Account getAccount(int Id) {
+        TypedQuery<Account> qAccount = this.em.createNamedQuery("Account.findById", Account.class);
+        qAccount.setParameter("id", Id);
+        return qAccount.getResultList().get(0);
+    }
+
 }

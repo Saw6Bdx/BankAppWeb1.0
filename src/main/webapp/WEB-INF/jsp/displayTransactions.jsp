@@ -112,6 +112,8 @@
                             </td>
                             <td>
                                 <a href='<c:url value="/deleteTransaction">
+                                       <c:param name = "holderId" value="${param['holderId']}"/>
+                                       <c:param name = "accountId" value="${param['accountId']}"/>
                                        <c:param name = "transactionId" value="${transaction.id}"/>
                                        <c:param name = "transactionLabel" value="${transaction.label}"/>
                                    </c:url>' 

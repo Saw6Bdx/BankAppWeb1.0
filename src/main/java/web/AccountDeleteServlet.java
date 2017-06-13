@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package web;
 
 import biz.manager.AccountMgr;
@@ -15,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 
 /**
  *
@@ -31,23 +27,23 @@ public class AccountDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Account account = this.accountManager.getAccount(Integer.parseInt(req.getParameter("accountId")));
+        req.setAttribute("account", account);
         req.getRequestDispatcher("/WEB-INF/jsp/deleteAccount.jsp").forward(req, resp);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        if (req.getParameter("yesBtn") != null) {
-            try {
-                this.accountManager.delete(req.getParameter("accountId"));
-            } catch (IllegalStateException ex) {
-                Logger.getLogger(AccountDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            this.accountManager.delete(Integer.parseInt(req.getParameter("accountId")));
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(AccountDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + req.getParameter("holderId"));
-        
+
     }
 
 }

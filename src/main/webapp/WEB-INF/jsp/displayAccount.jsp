@@ -57,6 +57,7 @@
                         </td>
                         <td>
                             <a href='<c:url value="/deleteAccount">
+                                   <c:param name="holderId" value="${param['holderId']}"/>
                                    <c:param name = "accountId" value="${account.id}"/>
                                </c:url>' 
                                title=""> <img src="img/RIP.jpg" alt="croix" title="Delete an account"/> </a>
