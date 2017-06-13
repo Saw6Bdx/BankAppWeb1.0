@@ -68,8 +68,6 @@ public class AccountNewServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
-		if (req.getParameter("applyBtn") != null) {
-
 			Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
 					req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
 
@@ -86,6 +84,7 @@ public class AccountNewServlet extends HttpServlet {
 			// ...transactions
 			Account account = new Account(null, req.getParameter("number"), creationDate,
 					Double.parseDouble(req.getParameter("firstBalance")), Double.parseDouble(req.getParameter("overdraft")));
+			account.setDescription(req.getParameter("description"));
 			account.setIdAccountType(accountType);
 			account.setIdCountryCode(countryCode);
 			account.setIdAgency(agency);
@@ -105,12 +104,5 @@ public class AccountNewServlet extends HttpServlet {
 			this.accountManager.createAccount(account);
 
 			resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
-		} else {
-			// REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-			resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
-		}
 	}
-
-	
-
 }
