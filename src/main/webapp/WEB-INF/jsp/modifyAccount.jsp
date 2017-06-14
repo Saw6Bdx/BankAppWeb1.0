@@ -23,11 +23,18 @@
                       <c:param name = "holderId" value="${param['holderId']}"/>
                       <c:param name = "accountId" value="${param['accountId']}"/>
                   </c:url>" method="post">
+
+                <fieldset><legend>Account information</legend></fieldset>
+                <div class="form-group">
+                    Account type
+                    <input class="form-control" type="txtLabel" name="accounttypeType" 
+                           value="<c:out value="${accountType.type}"/>"/>
+                </div><br/><br/>
                 <div class="form-group">
                     Number
                     <input class="form-control" type="txtLabel" name="accountNumber" 
                            value="<c:out value="${account.number}"/>"/>
-                </div>
+                </div><br/><br/>
                 <div class="form-group">
                     Creation date
                     <fmt:formatDate value="${account.creationDate}" pattern="dd" var="accountDay" />
@@ -54,81 +61,72 @@
                 </div><br/><br/>
                 <div class="form-group">
                     First balance
-                    <input class="form-control" type="txtLabel" name="accountFirstBalance" placeholder="Name" 
-                           value="<c:out value="${account.firstBalance}"/>"/>
+                    <input class="form-control" type="number" step="0.01" name="accountFirstBalance" placeholder="first balance" style="text-align: right"
+                           value="<c:out value="${account.firstBalance}"/>"/> €
                 </div><br/><br/>
                 <div class="form-group">
                     Overdraft
-                    <input class="form-control" type="txtLabel" name="accountOverdraft" placeholder="Name" 
-                           value="<c:out value="${account.overdraft}"/>"/>
-                </div><br/><br/>
-                <div class="form-group">
-                    Description
-                    <input class="form-control" type="txtLabel" name="accountDescription" placeholder="Name" 
-                           value="<c:out value="${account.description}"/>"/>
+                    <input class="form-control" type="number" step="0.01" name="accountOverdraft" placeholder="overdraft" style="text-align: right"
+                           value="<c:out value="${account.overdraft}"/>"/> €
                 </div><br/><br/>
                 <div class="form-group">
                     Interest rate
-                    <input class="form-control" type="txtLabel" name="accountInterestRate" placeholder="Name" 
-                           value="<c:out value="${account.interestRate}"/>"/>
+                    <input class="form-control" type="number" step="0.01" name="accountInterestRate" placeholder="interest rate" style="text-align: right" 
+                           value="<c:out value="${account.interestRate}"/>"/> %
+                </div><br/><br/>
+                <div class="form-group">
+                    Country code
+                    <input class="form-control" type="text" name="countrycodeCode" 
+                           value="<c:out value="${countryCode.code}"/>"/>
+                </div><br/><br/>
+                <div class="form-group">
+                    Description
+                    <input class="form-control" type="text" name="accountDescription" placeholder="description" 
+                           value="<c:out value="${account.description}"/>"/>
                 </div><br/><br/>
 
-
-                <div class="form-group">
-                    Agency name
-                    <input class="form-control" type="txtLabel" name="agencyName" 
-                           value="<c:out value="${agency.name}"/>"/>
-                </div><br/><br/>
-                <div class="form-group">
-                    Agency code
-                    <input class="form-control" type="txtLabel" name="agencyCode" 
-                           value="<c:out value="${agency.code}"/>"/>
-                </div><br/><br/>
-
-
-                <div class="form-group">
-                    Address
-                    <input class="form-control" type="txtLabel" name="addressLine1" 
-                           value="<c:out value="${address.line1}"/>"/>
-                    <input class="form-control" type="txtLabel" name="addressLine2" 
-                           value="<c:out value="${address.line2}"/>"/>
-                </div><br/><br/>
-                <div class="form-group">
-                    Postcode
-                    <input class="form-control" type="txtLabel" name="postcodePostcode" 
-                           value="<c:out value="${postcode.postcode}"/>"/>
-                </div><br/><br/>
-                <div class="form-group">
-                    City
-                    <input class="form-control" type="txtLabel" name="postcodeCity" 
-                           value="<c:out value="${postcode.city}"/>"/>
-                </div><br/><br/>
-                
-                
+                <fieldset><legend>Bank information</legend></fieldset>
                 <div class="form-group">
                     Bank name
-                    <input class="form-control" type="txtLabel" name="bankName" 
+                    <input class="form-control" type="text" name="bankName" 
                            value="<c:out value="${bank.name}"/>"/>
                 </div><br/><br/>
                 <div class="form-group">
                     Bank code
-                    <input class="form-control" type="txtLabel" name="bankCode" 
-                           value="<c:out value="${bank.code}"/>"/>
+                    <input class="form-control" type="text" name="bankCode" style="text-align: right" 
+                           value="<c:out value="${bank.bankCode}"/>"/>
                 </div><br/><br/>
-                
-                
+
+                <fieldset><legend>Agency information</legend></fieldset>
                 <div class="form-group">
-                    Account type
-                    <input class="form-control" type="txtLabel" name="accounttypeType" 
-                           value="<c:out value="${accountType.type}"/>"/>
+                    Agency name
+                    <input class="form-control" type="txtLabel" name="agencyName" 
+                           value="<c:out value="${agency.agencyName}"/>"/>
                 </div><br/><br/>
-                
                 <div class="form-group">
-                    Country code
-                    <input class="form-control" type="txtLabel" name="countrycodeCode" 
-                           value="<c:out value="${countryCode.code}"/>"/>
+                    Agency code
+                    <input class="form-control" type="text" name="agencyCode" style="text-align: right" 
+                           value="<c:out value="${agency.agencyCode}"/>"/>
                 </div><br/><br/>
-                
+                <div class="form-group">
+                    Address
+                    <input class="form-control" type="text" name="addressLine1" 
+                           value="<c:out value="${address.line1}"/>"/>
+                    <br/><br/>
+                    <input class="form-control" type="text" name="addressLine2" 
+                           value="<c:out value="${address.line2}"/>"/>
+                </div><br/><br/>
+                <div class="form-group">
+                    Postcode
+                    <input class="form-control" type="text" name="postcodePostcode" style="text-align: right" 
+                           value="<c:out value="${postcode.postcode}"/>"/>
+                </div><br/><br/>
+                <div class="form-group">
+                    City
+                    <input class="form-control" type="text" name="postcodeCity" 
+                           value="<c:out value="${postcode.city}"/>"/>
+                </div><br/><br/>
+
                 <a class="btn btn-primary btn-xs" href='<c:url value="/accountDisplay">
                        <c:param name="holderId" value="${param['holderId']}"/>
                    </c:url>' title="Back to home page">

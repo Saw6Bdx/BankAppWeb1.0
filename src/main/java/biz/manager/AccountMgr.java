@@ -14,8 +14,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.Account;
 import model.AccountType;
+import model.Address;
 import model.Agency;
+import model.Bank;
 import model.CountryCode;
+import model.Postcode;
 
 @Stateless
 public class AccountMgr {
@@ -26,6 +29,8 @@ public class AccountMgr {
     private List<AccountType> accountTypeList = new ArrayList<AccountType>();
     private List<CountryCode> countryCodeList = new ArrayList<CountryCode>();
     private List<Agency> agencyList = new ArrayList<Agency>();
+    private List<Postcode> postcodesList = new ArrayList<Postcode>();
+    private List<Bank> bankcodesList = new ArrayList<Bank>();
 
     public Account save(String number, Date creationDate, double firstBalance, double overdraft)
             throws AccountAlreadyExistingException {
@@ -168,6 +173,52 @@ public class AccountMgr {
         TypedQuery<Agency> qAgency = this.em.createNamedQuery("Agency.findById", Agency.class);
         qAgency.setParameter("id", Id);
         return qAgency.getResultList().get(0);
+    }
+
+    public void modify(Account account, CountryCode countryCode, Agency agency, Bank bank, Address address, Postcode postcode) {
+        
+        // Check if the postcode already exists
+        getPostcodeFromDB();
+        boolean flagPostcode = false;
+        for (Postcode pc : this.postcodesList) {
+            if (pc.getPostcode() == postcode.getPostcode()) {
+                address.setIdPostcode(pc);
+                flagPostcode = true;
+            }
+        }
+        if (!flagPostcode) {
+            this.em.persist(postcode);
+        }
+        
+        // Check if the bank code already exists
+        getBankFromDB();
+        boolean flagBankcode = false;
+        for (Bank bk : this.bankcodesList) {
+            if (bk.getBankCode().equals(bank.getBankCode())) {
+                agency.setIdBank(bk);
+                flagBankcode = true;
+            }
+        }
+        if (!flagBankcode) {
+            this.em.persist(bank);
+        }
+        agency.setIdAddress(address);
+        
+        account.setIdCountryCode(countryCode);
+        account.setIdAgency(agency);
+        
+        this.em.merge(account);
+        
+    }
+    
+    private void getPostcodeFromDB() {
+        TypedQuery<Postcode> qPostcode = this.em.createNamedQuery("Postcode.findAll", Postcode.class);
+        this.postcodesList = qPostcode.getResultList();
+    }
+
+    private void getBankFromDB() {
+        TypedQuery<Bank> qBank = this.em.createNamedQuery("Bank.findAll", Bank.class);
+        this.bankcodesList = qBank.getResultList();
     }
 
 }

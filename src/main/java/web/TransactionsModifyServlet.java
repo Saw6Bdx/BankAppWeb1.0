@@ -56,16 +56,14 @@ public class TransactionsModifyServlet extends HttpServlet {
                 req.getParameter("transactionEndMonth"), Integer.parseInt(req.getParameter("transactionEndDay")));
         Category category = this.categoryManager.getCategory(req.getParameter("categoryLabel"));
 
-        if (req.getParameter("yesBtn") != null) {
-            this.transactionsManager.modify(
-                    Integer.parseInt(req.getParameter("transactionId")),
-                    transactionDate,
-                    transactionEndDate,
-                    req.getParameter("transactionLabel"),
-                    Double.parseDouble(req.getParameter("transactionAmount")),
-                    category
-            );
-        }
+        this.transactionsManager.modify(
+                Integer.parseInt(req.getParameter("transactionId")),
+                transactionDate,
+                transactionEndDate,
+                req.getParameter("transactionLabel"),
+                Double.parseDouble(req.getParameter("transactionAmount")),
+                category
+        );
 
         resp.sendRedirect(req.getContextPath()
                 + "/transactionsDisplay?holderId=" + req.getParameter("holderId")

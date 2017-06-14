@@ -22,10 +22,8 @@ import model.AccountType;
 import model.Address;
 import model.Agency;
 import model.Bank;
-import model.Category;
 import model.CountryCode;
 import model.Postcode;
-import model.Transactions;
 import utils.DateUtils;
 
 /**
@@ -50,7 +48,7 @@ public class AccountModifyServlet extends HttpServlet {
         Bank bank = agency.getIdBank();
         AccountType accountType = account.getIdAccountType();
         CountryCode countryCode = account.getIdCountryCode();
-       
+
         req.setAttribute("account", account);
         req.setAttribute("agency", agency);
         req.setAttribute("address", address);
@@ -58,7 +56,7 @@ public class AccountModifyServlet extends HttpServlet {
         req.setAttribute("bank", bank);
         req.setAttribute("accountType", accountType);
         req.setAttribute("countryCode", countryCode);
-       
+
         req.getRequestDispatcher("/WEB-INF/jsp/modifyAccount.jsp").forward(req, resp);
 
     }
@@ -66,27 +64,59 @@ public class AccountModifyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        /*Date transactionDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("transactionYear")),
-                req.getParameter("transactionMonth"), Integer.parseInt(req.getParameter("transactionDay")));
-        Date transactionEndDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("transactionEndYear")),
-                req.getParameter("transactionEndMonth"), Integer.parseInt(req.getParameter("transactionEndDay")));
-        Category category = this.categoryManager.getCategory(req.getParameter("categoryLabel"));
-
-        if (req.getParameter("yesBtn") != null) {
-            this.transactionsManager.modify(
-                    Integer.parseInt(req.getParameter("transactionId")),
-                    transactionDate,
-                    transactionEndDate,
-                    req.getParameter("transactionLabel"),
-                    Double.parseDouble(req.getParameter("transactionAmount")),
-                    category
-            );
+        // Creation of all the objects ...
+        // ... account
+        Account account = new Account(Integer.parseInt(req.getParameter("accountId")),
+                req.getParameter("accountNumber"),
+                DateUtils.comboDate(Integer.parseInt(req.getParameter("accountYear")),
+                        req.getParameter("accountMonth"), Integer.parseInt(req.getParameter("accountDay"))),
+                Double.parseDouble(req.getParameter("accountFirstBalance")),
+                Double.parseDouble(req.getParameter("accountOverdraft"))
+        );
+        if (!req.getParameter("accountDescription").isEmpty()) {
+            account.setDescription(req.getParameter("accountDescription"));
+        }
+        if (!req.getParameter("accountInterestRate").isEmpty()) {
+            account.setInterestRate(Double.parseDouble(req.getParameter("accountInterestRate")));
         }
 
-        resp.sendRedirect(req.getContextPath()
-                + "/transactionsDisplay?holderId=" + req.getParameter("holderId")
-                + "&accountId=" + req.getParameter("accountId"));*/
+        // ... countrycode 
+        CountryCode countryCode = new CountryCode(null, req.getParameter("countrycodeCode"));
 
+        // ... agency
+        Agency agency = new Agency(null,
+                req.getParameter("agencyName"),
+                req.getParameter("agencyCode")
+        );
+
+        // ... bank
+        Bank bank = new Bank(null,
+                req.getParameter("bankName"),
+                req.getParameter("bankCode"));
+
+        
+        // ... accountType
+        AccountType accountType = new AccountType(null, req.getParameter("accounttypeType"));
+        // Attention, spécifier l'id
+        account.setIdAccountType(accountType);
+        
+        Address address = new Address(null, req.getParameter("addressLine1"));
+        if (!req.getParameter("addressLine2").isEmpty()) {
+            address.setLine2(req.getParameter("addressLine2")); 
+        }
+        
+        // ... postcode
+        Postcode postcode = new Postcode(null, 
+                Integer.parseInt(req.getParameter("postcodePostcode")), 
+                req.getParameter("postcodeCity")
+        );
+        
+        // Modification in the database
+        this.accountManager.modify(account, countryCode, agency, bank, address, postcode);
+
+        // Redirection
+        resp.sendRedirect(req.getContextPath()
+                + "/accountDisplay?holderId=" + req.getParameter("holderId"));
     }
 
 }
