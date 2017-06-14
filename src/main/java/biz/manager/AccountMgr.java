@@ -3,6 +3,7 @@ package biz.manager;
 import biz.exception.AccountAlreadyExistingException;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
+import biz.exception.NoBankAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import model.Account;
+import model.AccountManager;
 import model.AccountType;
 import model.Address;
 import model.Agency;
@@ -44,12 +46,12 @@ public class AccountMgr {
         return newAccount;
     }
 
-    public void createAccount(Account account) {//, Agency agency, Bank bank, AccountManager accountManager){
+    public void createAccount(Account account, AccountManager accountManager, Address address, Postcode postcode){
 
+        this.em.persist(postcode);
+        this.em.persist(address);
+        this.em.persist(accountManager);
         this.em.persist(account);
-        /*this.em.persist(agency);
-	  this.em.persist(bank);
-	  this.em.persist(accountManager);*/
 
     }
 
@@ -219,6 +221,15 @@ public class AccountMgr {
     private void getBankFromDB() {
         TypedQuery<Bank> qBank = this.em.createNamedQuery("Bank.findAll", Bank.class);
         this.bankcodesList = qBank.getResultList();
+    }
+
+    public List<Bank> displayBank() throws NoBankAvailableException {
+        try {
+            getBankFromDB();
+            return this.bankcodesList;
+        } catch (NoResultException e) {
+            throw new NoBankAvailableException();
+        }
     }
 
 }

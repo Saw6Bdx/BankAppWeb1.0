@@ -15,13 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
+import biz.exception.NoBankAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
 import biz.manager.AccountMgr;
 import model.Account;
+import model.AccountManager;
 import model.AccountType;
+import model.Address;
 import model.Agency;
+import model.Bank;
 import model.CountryCode;
 import model.Holder;
+import model.Postcode;
 import utils.DateUtils;
 
 /**
@@ -45,6 +50,8 @@ public class AccountNewServlet extends HttpServlet {
             req.setAttribute("countryCodeList", countryCodeList);
             List<Agency> agencyList = this.accountManager.displayAgency();
             req.setAttribute("agencyList", agencyList);
+            List<Bank> bankList = this.accountManager.displayBank();
+            req.setAttribute("bankList", bankList);
             req.getRequestDispatcher("/WEB-INF/jsp/createAccount.jsp").forward(req, resp);
         } catch (NoAccountAvailableException e) {
             // TODO Auto-generated catch block
@@ -58,6 +65,9 @@ public class AccountNewServlet extends HttpServlet {
         } catch (NoAgencyAvailableException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (NoBankAvailableException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -69,6 +79,9 @@ public class AccountNewServlet extends HttpServlet {
         Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
                 req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
 
+        Date assignmentDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("managerYear")),
+                req.getParameter("managerMonth"), Integer.parseInt(req.getParameter("managerDay")));
+
         // Creation of objects ...
         // ...accountType
         AccountType accountType = new AccountType(Integer.parseInt(req.getParameter("accountTypeId")));
@@ -76,13 +89,38 @@ public class AccountNewServlet extends HttpServlet {
         // ...countryCode
         CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
 
-        // ...category
+        // ...agency
         Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
+
+        // ... postcode
+        Postcode postcode = new Postcode(null, Integer.parseInt(req.getParameter("agencyPostCode")),
+                req.getParameter("agencyCity"));
+
+        // ... address
+        Address address = new Address(null, req.getParameter("agencyAddressLine1"));
+        address.setLine2(req.getParameter("agencyAddressLine2"));
+        address.setIdPostcode(postcode);
+
+        // ...bank
+        Bank bank = new Bank(Integer.parseInt(req.getParameter("bankId")));
+
+        // ...agency
+        /*Agency agency = new Agency(null, req.getParameter("agencyName"), req.getParameter("agencyCode"));
+		agency.setIdAddress(address);
+		agency.setIdBank(bank);*/
+        // ...accountManager
+        AccountManager accountManager = new AccountManager(null, req.getParameter("managerName"),
+                req.getParameter("managerFirstName"), assignmentDate);
+        accountManager.setPhone(req.getParameter("managerPhone"));
+        accountManager.setEmail(req.getParameter("managerEmail"));
+        accountManager.setIdAgency(agency);
 
         // ...transactions
         Account account = new Account(null, req.getParameter("number"), creationDate,
-                Double.parseDouble(req.getParameter("firstBalance")), Double.parseDouble(req.getParameter("overdraft")));
+                Double.parseDouble(req.getParameter("firstBalance")),
+                Double.parseDouble(req.getParameter("overdraft")));
         account.setDescription(req.getParameter("description"));
+        account.setInterestRate(Double.parseDouble(req.getParameter("interestRate")));
         account.setIdAccountType(accountType);
         account.setIdCountryCode(countryCode);
         account.setIdAgency(agency);
@@ -98,8 +136,9 @@ public class AccountNewServlet extends HttpServlet {
         collAccount.add(account);
         holder.setAccountCollection(collAccount);
 
-        this.accountManager.createAccount(account);
+        this.accountManager.createAccount(account, accountManager, address, postcode);
 
-        resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
+        resp.sendRedirect(
+                req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
     }
 }
