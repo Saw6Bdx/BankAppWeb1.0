@@ -41,7 +41,7 @@
                             <c:out value="${category.label}"/>
                         </td>
                         <td>
-                            <c:out value="${amount[pos]}"/> €
+                            <fmt:formatNumber type = "number" maxFractionDigits = "2" value="${amount[pos]}" /> €
                             <c:set var="total" value="${total + amount[pos]}" />
                         </td>
                         <td>

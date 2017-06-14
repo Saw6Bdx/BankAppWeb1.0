@@ -71,7 +71,7 @@ public class HolderMgr {
         this.holdersList = qHolder.getResultList();
     }
 
-    private void getPostcodeFromDB() {
+    public void getPostcodeFromDB() {
         TypedQuery<Postcode> qPostcode = this.em.createNamedQuery("Postcode.findAll", Postcode.class);
         this.postcodesList = qPostcode.getResultList();
     }

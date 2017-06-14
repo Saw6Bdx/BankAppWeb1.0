@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import biz.exception.AccountAlreadyExistingException;
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
 import biz.exception.NoBankAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
+import biz.exception.NoHolderAvailableException;
 import biz.manager.AccountMgr;
+import biz.manager.HolderMgr;
 import model.Account;
 import model.AccountManager;
 import model.AccountType;
@@ -89,9 +92,6 @@ public class AccountNewServlet extends HttpServlet {
         // ...countryCode
         CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
 
-        // ...agency
-        Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
-
         // ... postcode
         Postcode postcode = new Postcode(null, Integer.parseInt(req.getParameter("agencyPostCode")),
                 req.getParameter("agencyCity"));
@@ -102,17 +102,30 @@ public class AccountNewServlet extends HttpServlet {
         address.setIdPostcode(postcode);
 
         // ...bank
-        Bank bank = new Bank(Integer.parseInt(req.getParameter("bankId")));
+        Bank bank = null;
+        if (req.getParameter("agencyId").equals("0")) {
+            bank = new Bank(null, req.getParameter("bankName"), req.getParameter("bankCode"));
+        } else {
+            bank = new Bank(Integer.parseInt(req.getParameter("bankId")));
+        }
 
         // ...agency
-        /*Agency agency = new Agency(null, req.getParameter("agencyName"), req.getParameter("agencyCode"));
-		agency.setIdAddress(address);
-		agency.setIdBank(bank);*/
+        Agency agency = null;
+        if (req.getParameter("agencyId").equals("0")) {
+            agency = new Agency(null, req.getParameter("agencyName"), req.getParameter("agencyCode"));
+        } else {
+            agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
+        }
+
         // ...accountManager
         AccountManager accountManager = new AccountManager(null, req.getParameter("managerName"),
                 req.getParameter("managerFirstName"), assignmentDate);
-        accountManager.setPhone(req.getParameter("managerPhone"));
-        accountManager.setEmail(req.getParameter("managerEmail"));
+        if (req.getParameter("managerPhone") != "") {
+            accountManager.setPhone(req.getParameter("managerPhone"));
+        }
+        if (req.getParameter("managerEmail") != "") {
+            accountManager.setEmail(req.getParameter("managerEmail"));
+        }
         accountManager.setIdAgency(agency);
 
         // ...transactions
@@ -136,7 +149,12 @@ public class AccountNewServlet extends HttpServlet {
         collAccount.add(account);
         holder.setAccountCollection(collAccount);
 
-        this.accountManager.createAccount(account, accountManager, address, postcode);
+        try {
+            this.accountManager.createAccount(account, agency, bank, accountManager, address, postcode);
+        } catch (AccountAlreadyExistingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         resp.sendRedirect(
                 req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));

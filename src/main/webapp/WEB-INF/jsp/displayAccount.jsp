@@ -34,7 +34,6 @@
                 <tr>
                     <th>Account</th>
                     <th>Balance</th>
-                    <th>Modify</th>
                     <th>Delete</th>
                 </tr>
                 <c:set var="pos" value="${0}"/>
@@ -51,13 +50,7 @@
                             <fmt:formatNumber type = "number" maxFractionDigits = "2" value="${account.firstBalance+sumTransactions[pos]}" /> €
                             <c:set var="total" value="${total + account.firstBalance+sumTransactions[pos]}" />
                         </td>
-                        <td>
-                            <a href='<c:url value="/modifyAccount">
-                                   <c:param name="holderId" value="${param['holderId']}"/>
-                                   <c:param name = "accountId" value="${account.id}"/>
-                               </c:url>' 
-                               title=""> <img src="img/edit.png" alt="croix" title="Modify an account"/> </a>
-                        </td>
+                        
                         <td>
                             <a href='<c:url value="/deleteAccount">
                                    <c:param name="holderId" value="${param['holderId']}"/>
