@@ -117,6 +117,8 @@ public class AccountNewServlet extends HttpServlet {
 			}
 		else{
 			agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
+			agency.setIdAddress(address);
+			agency.setIdBank(bank);
 		}
 		
 		// ...accountManager

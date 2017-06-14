@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package biz.manager;
 
 import biz.exception.LoginAlreadyExistingException;
@@ -66,7 +71,7 @@ public class HolderMgr {
         this.holdersList = qHolder.getResultList();
     }
 
-    private void getPostcodeFromDB() {
+    public void getPostcodeFromDB() {
         TypedQuery<Postcode> qPostcode = this.em.createNamedQuery("Postcode.findAll", Postcode.class);
         this.postcodesList = qPostcode.getResultList();
     }

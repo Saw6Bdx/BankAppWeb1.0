@@ -22,7 +22,6 @@ import model.Postcode;
 public class BankMgr {
 	@PersistenceContext(unitName = "BankAppPU")
 	private EntityManager em;
-	private List<Bank> bankList = new ArrayList<Bank>();
 
 	@Lock(LockType.WRITE)
 	public void createBank(Agency agency, AccountManager accountManager, Address address, Postcode postcode) {
@@ -31,17 +30,5 @@ public class BankMgr {
 		this.em.persist(agency);
 		this.em.persist(address);
 		this.em.persist(postcode);
-	}
-
-	@Lock(LockType.READ)
-	public List<Bank> displayBank() throws NoBankAvailableException {
-		try {
-			TypedQuery<Bank> qBank = this.em.createNamedQuery("Bank.findAll", Bank.class);
-			this.bankList = qBank.getResultList();
-
-			return this.bankList;
-		} catch (NoResultException e) {
-			throw new NoBankAvailableException();
-		}
 	}
 }

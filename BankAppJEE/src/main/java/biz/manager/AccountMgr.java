@@ -72,7 +72,8 @@ public class AccountMgr {
         boolean flagBankId = false;
         for (Bank bk : this.bankList) {
             if (bk.getId() == bank.getId()) {
-                flagBankId = true;
+                
+            	flagBankId = true;
             }
         }
         if (!flagBankId) {
@@ -88,6 +89,7 @@ public class AccountMgr {
         boolean flagAgencyId = false;
         for (Agency ag : this.agencyList) {
             if (ag.getId() == agency.getId()) {
+            	
                 flagAgencyId = true;
             }
         }
@@ -96,7 +98,7 @@ public class AccountMgr {
 			agency.setIdBank(bank);
             this.em.persist(agency);
         }
-        
+        accountManager.setIdAgency(agency);
         this.em.persist(accountManager);
         
         this.em.persist(account);

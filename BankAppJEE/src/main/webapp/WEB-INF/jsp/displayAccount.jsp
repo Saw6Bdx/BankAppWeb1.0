@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,9 +18,10 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <a href='<c:url value="/holderDisplay"></c:url>'>Change user</a>
-            <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${holder.id}"/></c:url>'><c:out value="${holder}"/>New Account</a>
-            <a href='<c:url value="/bankCreation"></c:url>'>New Bank</a>
+            <a href='<c:url value="/accountCreation"><c:param name="holderId" value="${param['holderId']}"/></c:url>'><c:out value="${holder}"/>
+                New Account</a>
+            <a href="index.html">
+                Disconnect</a>
         </nav>
         <c:choose>
             <c:when test="${error eq 'no.account.available'}">
@@ -29,20 +31,25 @@
 
         <section>
             <table class="table table-bordered table-hover">
-            <tr>
+                <tr>
                     <th>Account</th>
                     <th>Balance</th>
                 </tr>
-            <!--c:set var="balance" value="${a.firstBalance}"/-->
-            <c:forEach items="${accountList}" var="account">
-                <tr>
-                    <td>
-                        <a href='<c:url value="/transactionsDisplay"><c:param name="accountId" value="${account.id}"/></c:url>'><c:out value="${account}"/></a>
-                    </td>
-                    <td>
-              </td>
-                </tr>
-            </c:forEach>
+                <c:set var="pos" value="${0}"/>
+                <c:forEach items="${accountList}" var="account">
+                    <tr>
+                        <td>
+                            <a href='<c:url value="/transactionsDisplay">
+                                   <c:param name="holderId" value="${param['holderId']}"/>
+                                   <c:param name="accountId" value="${account.id}"/></c:url>'>
+                               <c:out value="${account}"/></a>
+                        </td>
+                        <td>
+                            <fmt:formatNumber type = "number" maxFractionDigits = "2" value="${account.firstBalance+sumTransactions[pos]}" /> €
+                        </td>
+                    </tr>
+                    <c:set var="pos" value="${pos + 1}" />
+                </c:forEach>
             </table>
         </section>
     </body>

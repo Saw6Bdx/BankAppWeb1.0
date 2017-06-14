@@ -18,7 +18,12 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
+            <a href='<c:url value="/accountDisplay"><c:param name="holderId" value="${param['holderId']}"/></c:url>' title="Back to home page">
+                Home</a>
+            <a href='<c:url value="/categoryCreation"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Add a new category">
+                New category</a>
+            <a href="index.html">
+                Disconnect</a>
         </nav>
         <section>
             <table class="table table-bordered table-hover">
@@ -26,6 +31,7 @@
                     <th>Category</th>
                     <th>Amount</th>
                     <th>Percent</th>
+                    <th>Delete</th>
                 </tr>
                 <c:set var="pos" value="${0}"/>
                 <c:set var="total" value="${0}"/>
@@ -40,6 +46,15 @@
                         </td>
                         <td>
                             <c:out value="${percentByCategories[pos]}"/>
+                        </td>
+                        <td>
+                            <c:if test = "${pos > 13}">
+                                <a href='<c:url value="/deleteCategory">
+                                   <c:param name = "categoryId" value="${category.id}"/>
+                                   <c:param name = "categoryLabel" value="${category.label}"/>
+                               </c:url>' 
+                               title=""> <img src="img/RIP.jpg" alt="croix" title="Delete a category"/> </a>
+                            </c:if>
                         </td>
                         <c:set var="pos" value="${pos + 1}" />
                     </tr>

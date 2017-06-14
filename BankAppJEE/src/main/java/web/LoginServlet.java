@@ -40,8 +40,8 @@ public class LoginServlet extends HttpServlet {
             String passwordHolder = holderList.get(0).getPassword();
             // Login existe, vérifier si le mot de passe correspond au même holder dans la base, sinon erreur
             //if (get_SHA_512_SecurePassword(this.password,"1").equals(passwordHolder)) {
-                int idHolder = holderList.get(0).getId();
-                resp.sendRedirect(req.getContextPath() + "/accountDisplay?idHolder=" + idHolder);
+                int holderId = holderList.get(0).getId();
+                resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + holderId);
             //} else{
                 //req.setAttribute("error", "pwd.is.invalid");
                 //getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);

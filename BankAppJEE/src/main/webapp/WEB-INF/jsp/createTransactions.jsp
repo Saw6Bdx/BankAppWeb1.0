@@ -81,7 +81,7 @@
                     </c:forEach>
                 </select></div><br/><br/>
             <div class="form-group">
-                Description : <textarea class="form-control" name="description" rows="1" cols="30" placeholder="Description (optional)" maxlength="150"></textarea></div><br/><br/>
+                Description : <textarea class="form-control" name="comment" rows="1" cols="30" placeholder="Comment (optional)" maxlength="150"></textarea></div><br/><br/>
 
             <!-- if we have time to implement periodic of transactions -->
             <!-- fieldset><div class="form-group"><label class="checkbox-inline">Periodic<input type="checkbox" name="cbPeriodicity"/></label></div><br/>

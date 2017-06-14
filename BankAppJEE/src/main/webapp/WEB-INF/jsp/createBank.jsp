@@ -17,7 +17,6 @@
             <h2>BankApp</h2>
         </header>
         <nav>
-            <%@include file="menu.jsp" %>
         </nav>
         <form class="form-inline" method="post" action="<c:url value="/bankCreation"/>">
 

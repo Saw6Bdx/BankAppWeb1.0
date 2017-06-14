@@ -2,15 +2,11 @@ package biz.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.ejb.Lock;
-import javax.ejb.LockType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
 import biz.exception.CategoryAlreadyExistingException;
 import biz.exception.CategoryDoesNotExistException;
 import biz.exception.NoCategoriesAvailableException;
@@ -44,37 +40,30 @@ public class CategoryMgr {
         Category newCategory = new Category(null, label);
         em.persist(newCategory);
     }
-    
+
     public void delete(String parameter) {
 
         TypedQuery<Category> qCategory = this.em.createQuery("SELECT t FROM Category t WHERE t.id=:pid", Category.class);
         qCategory.setParameter("pid", Integer.parseInt(parameter));
         Category category = qCategory.getResultList().get(0);
         this.em.remove(category);
-        
+
     }
-    
-    @Lock(LockType.READ) 
+
     private void setCategoryListFromDB() {
-        TypedQuery<Category> qCountryCode = this.em.createNamedQuery("Category.findAll", Category.class);
-        this.categoriesList = qCountryCode.getResultList();
-    }
-    
-    @Lock(LockType.READ) 
-    public List<Category> displayCategories()
-    	throws NoCategoriesAvailableException
-    	  {
-    	    try
-    	    {
-    	TypedQuery<Category> qCategories = this.em.createNamedQuery("Category.findAll", Category.class);
+        TypedQuery<Category> qCategories = this.em.createNamedQuery("Category.findAll", Category.class);
         this.categoriesList = qCategories.getResultList();
-        return this.categoriesList;
     }
-        catch (NoResultException e)
-        {
-          throw new NoCategoriesAvailableException();
+
+    public List<Category> displayCategories() throws NoCategoriesAvailableException {
+        try {
+            TypedQuery<Category> qCategories = this.em.createNamedQuery("Category.findAll", Category.class);
+            this.categoriesList = qCategories.getResultList();
+            return this.categoriesList;
+        } catch (NoResultException e) {
+            throw new NoCategoriesAvailableException();
+        }
     }
-}
 
     public Category getByLabel(String label) throws CategoryDoesNotExistException {
         for (Category category : categoriesList) {
@@ -85,7 +74,6 @@ public class CategoryMgr {
         throw new CategoryDoesNotExistException();
     }
 
-    
     public double[] calculatePercentByCategories() throws NoCategoriesAvailableException, NoTransactionsAvailableException {
 
         try {
@@ -127,7 +115,7 @@ public class CategoryMgr {
     public double[] getAmount() {
         return this.tabSumCategory;
     }
-    
+
     public List<Category> getCategoriesList() {
         return this.categoriesList;
     }

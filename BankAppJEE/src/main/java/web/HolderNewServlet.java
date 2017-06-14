@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package web;
 
 import biz.exception.LoginAlreadyExistingException;
@@ -13,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.Address;
 import model.Holder;
 import model.Postcode;
+import utils.DateUtils;
+import static utils.Password.get_SHA_512_SecurePassword;
 
 /**
  *
@@ -58,10 +65,13 @@ public class HolderNewServlet extends HttpServlet {
                     req.getParameter("userName"),
                     req.getParameter("userFirstName"),
                     req.getParameter("userLogin"),
-                    req.getParameter("userPassword")
+                    get_SHA_512_SecurePassword(req.getParameter("userPassword"), "1")
             );
-            /* String userBirthday = req.getParameter("userBirthday");
-            holder.setBirthday(userBirthday);*/
+            holder.setBirthday(DateUtils.comboDate(
+                    Integer.parseInt(req.getParameter("userYear")),
+                    req.getParameter("userMonth"),
+                    Integer.parseInt(req.getParameter("userDay"))
+            ));
             holder.setPhone(req.getParameter("userPhone"));
             holder.setIdAddress(address);
 
@@ -77,10 +87,10 @@ public class HolderNewServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/createUser.jsp").forward(req, resp);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/account");
+            resp.sendRedirect(req.getContextPath() + "/index.html");
         } else {
             // REDIRECTION VERS LA PAGE D'ACCUEIL, HORS CONNEXION
-            resp.sendRedirect(req.getContextPath() + "/account");
+            resp.sendRedirect(req.getContextPath() + "/index.html");
         }
 
     }
