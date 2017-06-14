@@ -13,18 +13,18 @@
             <web-resource-name>secured</web-resource-name>
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
+        <!--<auth-constraint>
             <role-name>holder</role-name>
-        </auth-constraint>
+        </auth-constraint>-->
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <login-config>
+    <!--<login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/loginExo.jsp</form-login-page>
             <form-error-page>/404.jsp</form-error-page>
         </form-login-config>
-    </login-config>
+    </login-config>-->
 </web-app>

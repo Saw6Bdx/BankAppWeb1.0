@@ -38,6 +38,7 @@
                     <th>Delete</th>
                 </tr>
                 <c:set var="pos" value="${0}"/>
+                <c:set var="total" value="${0}"/>
                 <c:forEach items="${accountList}" var="account">
                     <tr>
                         <td>
@@ -48,9 +49,11 @@
                         </td>
                         <td>
                             <fmt:formatNumber type = "number" maxFractionDigits = "2" value="${account.firstBalance+sumTransactions[pos]}" /> €
+                            <c:set var="total" value="${total + account.firstBalance+sumTransactions[pos]}" />
                         </td>
                         <td>
                             <a href='<c:url value="/modifyAccount">
+                                   <c:param name="holderId" value="${param['holderId']}"/>
                                    <c:param name = "accountId" value="${account.id}"/>
                                </c:url>' 
                                title=""> <img src="img/edit.png" alt="croix" title="Modify an account"/> </a>
@@ -65,6 +68,10 @@
                     </tr>
                     <c:set var="pos" value="${pos + 1}" />
                 </c:forEach>
+                <tr>
+                    <td class="noborder"></td>
+                    <td><fmt:formatNumber type = "number" maxFractionDigits = "2" value="${total}" /> €</td>
+                </tr>
             </table>
         </section>
     </body>
