@@ -26,7 +26,7 @@ public class TestBank {
     public void TestBank_NameIsNull() {
         new Bank(1, null, "bar");
     }
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void TestBank_NameIsEmpty() {
         new Bank(1, "", "bar");
     }
@@ -35,7 +35,7 @@ public class TestBank {
         this.tested = new Bank();
         this.tested.setName(null);
     }
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void TestSetBank_NameIsEmpty() {
         this.tested = new Bank();
         this.tested.setName("");
@@ -45,7 +45,7 @@ public class TestBank {
     public void TestBank_BankCodeIsNull() {
         new Bank(1, "foo", null);
     }
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void TestBank_BankCodeIsEmpty() {
         new Bank(1, "foo", "");
     }
@@ -54,7 +54,7 @@ public class TestBank {
         this.tested = new Bank();
         this.tested.setBankCode(null);
     }
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void TestSetBank_BankCodeIsEmpty() {
         this.tested = new Bank();
         this.tested.setBankCode("");
