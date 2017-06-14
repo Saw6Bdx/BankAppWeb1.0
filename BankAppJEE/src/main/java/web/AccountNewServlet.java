@@ -15,22 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import biz.exception.NoAccountAvailableException;
 import biz.exception.NoAgencyAvailableException;
+import biz.exception.NoBankAvailableException;
 import biz.exception.NoCountryCodeAvailableException;
 import biz.exception.NoHolderAvailableException;
 import biz.manager.AccountMgr;
 import biz.manager.HolderMgr;
 import model.Account;
+import model.AccountManager;
 import model.AccountType;
+import model.Address;
 import model.Agency;
+import model.Bank;
 import model.CountryCode;
 import model.Holder;
+import model.Postcode;
 import utils.DateUtils;
 
 /**
  *
  * @author Guest
  */
-@WebServlet({"/accountCreation"})
+@WebServlet({ "/accountCreation" })
 public class AccountNewServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -39,14 +44,16 @@ public class AccountNewServlet extends HttpServlet {
 	AccountMgr accountManager;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<AccountType> accountTypeList = this.accountManager.displayAccountType();
 			req.setAttribute("accountTypeList", accountTypeList);
 			List<CountryCode> countryCodeList = this.accountManager.displayCountryCode();
-		    req.setAttribute("countryCodeList", countryCodeList);
-		    List<Agency> agencyList = this.accountManager.displayAgency();
-		    req.setAttribute("agencyList", agencyList);
+			req.setAttribute("countryCodeList", countryCodeList);
+			List<Agency> agencyList = this.accountManager.displayAgency();
+			req.setAttribute("agencyList", agencyList);
+			List<Bank> bankList = this.accountManager.displayBank();
+			req.setAttribute("bankList", bankList);
 			req.getRequestDispatcher("/WEB-INF/jsp/createAccount.jsp").forward(req, resp);
 		} catch (NoAccountAvailableException e) {
 			// TODO Auto-generated catch block
@@ -60,6 +67,9 @@ public class AccountNewServlet extends HttpServlet {
 		} catch (NoAgencyAvailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NoBankAvailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -68,41 +78,70 @@ public class AccountNewServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
-			Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
-					req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
+		Date creationDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("userYear")),
+				req.getParameter("userMonth"), Integer.parseInt(req.getParameter("userDay")));
+		
+		Date assignmentDate = DateUtils.comboDate(Integer.parseInt(req.getParameter("managerYear")),
+				req.getParameter("managerMonth"), Integer.parseInt(req.getParameter("managerDay")));
 
-			// Creation of objects ...
-			// ...accountType
-			AccountType accountType = new AccountType(Integer.parseInt(req.getParameter("accountTypeId")));
-			
-			// ...countryCode
-			CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
-			
-			// ...category
-			Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
+		// Creation of objects ...
+		// ...accountType
+		AccountType accountType = new AccountType(Integer.parseInt(req.getParameter("accountTypeId")));
 
-			// ...transactions
-			Account account = new Account(null, req.getParameter("number"), creationDate,
-					Double.parseDouble(req.getParameter("firstBalance")), Double.parseDouble(req.getParameter("overdraft")));
-			account.setDescription(req.getParameter("description"));
-			account.setIdAccountType(accountType);
-			account.setIdCountryCode(countryCode);
-			account.setIdAgency(agency);
-			
-			// ... table ASSIGN (in Holder and Account classes)
-            Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
-			
-            Collection<Holder> collHolder = new HashSet();
-			collHolder.add(holder);
-            account.setHolderCollection(collHolder);
+		// ...countryCode
+		CountryCode countryCode = new CountryCode(Integer.parseInt(req.getParameter("countryCodeId")));
 
-            Collection<Account> collAccount = new HashSet();
-            collAccount.add(account);
-            holder.setAccountCollection(collAccount);
-			
+		// ...agency
+		Agency agency = new Agency(Integer.parseInt(req.getParameter("agencyId")));
 
-			this.accountManager.createAccount(account);
+		// ... postcode
+		Postcode postcode = new Postcode(null, Integer.parseInt(req.getParameter("agencyPostCode")),
+				req.getParameter("agencyCity"));
 
-			resp.sendRedirect(req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
+		// ... address
+		Address address = new Address(null, req.getParameter("agencyAddressLine1"));
+		address.setLine2(req.getParameter("agencyAddressLine2"));
+		address.setIdPostcode(postcode);
+
+		// ...bank
+		Bank bank = new Bank(Integer.parseInt(req.getParameter("bankId")));
+
+		// ...agency
+		/*Agency agency = new Agency(null, req.getParameter("agencyName"), req.getParameter("agencyCode"));
+		agency.setIdAddress(address);
+		agency.setIdBank(bank);*/
+
+		// ...accountManager
+		AccountManager accountManager = new AccountManager(null, req.getParameter("managerName"),
+				req.getParameter("managerFirstName"), assignmentDate);
+		accountManager.setPhone(req.getParameter("managerPhone"));
+		accountManager.setEmail(req.getParameter("managerEmail"));
+		accountManager.setIdAgency(agency);
+
+		// ...transactions
+		Account account = new Account(null, req.getParameter("number"), creationDate,
+				Double.parseDouble(req.getParameter("firstBalance")),
+				Double.parseDouble(req.getParameter("overdraft")));
+		account.setDescription(req.getParameter("description"));
+		account.setInterestRate(Double.parseDouble(req.getParameter("interestRate")));
+		account.setIdAccountType(accountType);
+		account.setIdCountryCode(countryCode);
+		account.setIdAgency(agency);
+
+		// ... table ASSIGN (in Holder and Account classes)
+		Holder holder = new Holder(Integer.parseInt(req.getParameter("holderId")));
+
+		Collection<Holder> collHolder = new HashSet();
+		collHolder.add(holder);
+		account.setHolderCollection(collHolder);
+
+		Collection<Account> collAccount = new HashSet();
+		collAccount.add(account);
+		holder.setAccountCollection(collAccount);
+
+		this.accountManager.createAccount(account, accountManager, address, postcode);
+
+		resp.sendRedirect(
+				req.getContextPath() + "/accountDisplay?holderId=" + Integer.parseInt(req.getParameter("holderId")));
 	}
 }
