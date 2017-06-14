@@ -58,6 +58,12 @@ public class Bank implements Serializable {
     }
 
     public Bank(Integer id, String name, String bankCode) {
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("name can't be empty");
+        }
+        if(bankCode.isEmpty()){
+            throw new IllegalArgumentException("bankCode can't be empty");
+        }
         this.id = id;
         this.name = name;
         this.bankCode = bankCode;
@@ -76,6 +82,9 @@ public class Bank implements Serializable {
     }
 
     public void setName(String name) {
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("name can't be empty");
+        }
         this.name = name;
     }
 
@@ -84,6 +93,9 @@ public class Bank implements Serializable {
     }
 
     public void setBankCode(String bankCode) {
+        if(bankCode.isEmpty()){
+            throw new IllegalArgumentException("bankCode can't be empty");
+        }
         this.bankCode = bankCode;
     }
 
