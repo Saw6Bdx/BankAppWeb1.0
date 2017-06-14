@@ -25,20 +25,16 @@ public class CategoryNewServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        if (req.getParameter("applyBtn") != null) {
-            try {
-                this.categoryManager.save(req.getParameter("categoryLabel"));
-                req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
-            } catch (CategoryAlreadyExistingException ex) {
-                log("Category already exists", ex);
-                req.setAttribute("error", "category.already.exists");
-                getServletContext().getRequestDispatcher("/WEB-INF/jsp/createCategory.jsp").forward(req, resp);
-            }
+
+        try {
+            this.categoryManager.save(req.getParameter("categoryLabel"));
+            resp.sendRedirect(req.getContextPath() + "/displayCategories?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
+        } catch (CategoryAlreadyExistingException ex) {
+            log("Category already exists", ex);
+            req.setAttribute("error", "category.already.exists");
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/createCategory.jsp").forward(req, resp);
         }
-        else {
-            req.getRequestDispatcher("/WEB-INF/jsp/displayTransactions.jsp").forward(req, resp);
-        }
+
     }
 
 }

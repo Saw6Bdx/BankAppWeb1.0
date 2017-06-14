@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,40 +38,41 @@
                 </select></div><br/><br/>     
             <div class="form-group">Label : <input class="form-control" type="text" name="label" placeholder="Label" value="<c:out value="${param['label']}"/>"></div><br/><br/>
             <div class="form-group">Amount : <input class="form-control" type="number" name="amount" step="0.01" placeholder="-200.00" style="text-align: right"> €</div><br/><br/>
-            <div class="form-group">Date : <select name="userDay" class="form-control">
-                    <option value="0" selected="selected">Day...</option>
+            <div class="form-group">Date : 
+                <fmt:setLocale value="en_US" />
+                <jsp:useBean id="now" class="java.util.Date"/>    
+                <fmt:formatDate value="${now}" pattern="dd" var="todayDay" />
+                <fmt:formatDate value="${now}" pattern="MMMM" var="todayMonth" />
+                <fmt:formatDate value="${now}" pattern="yyyy" var="todayYear" />
+                <select name="userDay" class="form-control">
                     <c:forEach var="i" begin="1" end="31">
-                        <option><c:out value ="${i}">${i}</c:out></option>
+                        <option ${i == todayDay ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                     </c:forEach>
-                </select>                
+                </select>     
                 <select name="userMonth" class="form-control">
-                    <option value="0" selected="selected">Month...</option>
                     <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
-                        <option><c:out value="${month}"/></option>
+                        <option ${month == todayMonth ? 'selected' : ''}><c:out value="${month}"/></option>
                     </c:forTokens>
                 </select>
                 <select name="userYear" class="form-control">
-                    <option value="0" selected="selected">Year...</option>
                     <c:forEach var="i" begin="2015" end="2025">
-                        <option><c:out value ="${i}">${i}</c:out></option>
+                        <option ${i == todayYear ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                     </c:forEach>
                 </select></div><br/><br/>
-            <div class="form-group">End date : <select name="userEndDay" class="form-control">
-                    <option value="0" selected="selected">Day...</option>
+            <div class="form-group">End date : 
+                <select name="userEndDay" class="form-control">
                     <c:forEach var="i" begin="1" end="31">
-                        <option><c:out value ="${i}">${i}</c:out></option>
+                        <option ${i == todayDay ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                     </c:forEach>
                 </select>                
                 <select name="userEndMonth" class="form-control">
-                    <option value="0" selected="selected">Month...</option>
                     <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
-                        <option><c:out value="${month}"/></option>
+                        <option ${month == todayMonth ? 'selected' : ''}><c:out value="${month}"/></option>
                     </c:forTokens>
                 </select>
                 <select name="userEndYear" class="form-control"> 
-                    <option value="0" selected="selected">Year...</option>
                     <c:forEach var="i" begin="2015" end="2025">
-                        <option><c:out value ="${i}">${i}</c:out></option>
+                        <option ${i == todayYear ? 'selected' : ''}><c:out value="${i}">${i}</c:out></option>
                     </c:forEach>
                 </select></div><br/><br/>
             <div class="form-group">

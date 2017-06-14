@@ -20,7 +20,10 @@
         </nav>
         <form class="form-inline form-horizontal" 
               method="post" 
-              action="<c:url value="/categoryCreation"/>">
+              action="<c:url value="/categoryCreation">
+                  <c:param name="holderId" value="${param['holderId']}"/>
+                  <c:param name="accountId" value="${param['accountId']}"/>
+              </c:url>">
             <div class="form-group">
                 Name category
                 <input class="form-control" type="txtLabel" name="categoryLabel" placeholder="Name" 
@@ -31,7 +34,7 @@
                     <p class="errorMsgColor">This category already exists&nbsp;!</p><br><br>
                 </c:when>
             </c:choose>
-            <a class="btn btn-primary btn-xs" href='<c:url value="/transactionsDisplay"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Back to home page">
+            <a class="btn btn-primary btn-xs" href='<c:url value="/displayCategories"><c:param name="holderId" value="${param['holderId']}"/><c:param name="accountId" value="${param['accountId']}"/></c:url>' title="Back to home page">
                 Cancel</a>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>
         </form><br/><br/>

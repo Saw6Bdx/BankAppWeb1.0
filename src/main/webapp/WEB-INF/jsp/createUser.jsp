@@ -21,6 +21,7 @@
         <form class="form-inline form-horizontal" 
               method="post" 
               action="<c:url value="/userCreation"/>">
+            <fieldset><legend>New user</legend></fieldset>
             <div class="form-group">
                 Name
                 <input class="form-control" type="txtLabel" name="userName" placeholder="Name" 
@@ -44,28 +45,28 @@
             <div class="form-group">
                 Birthday
                 <select name="userDay" class="form-control" 
-                       value="<c:out value="${param['userDay']}"/>">
+                        value="<c:out value="${param['userDay']}"/>">
                     <option value="0" selected="selected">Day...</option>
                     <c:forEach var="i" begin="1" end="31">
                         <option><c:out value ="${i}">${i}</c:out></option>
                     </c:forEach>
                 </select>                
                 <select name="userMonth" class="form-control" 
-                       value="<c:out value="${param['userMonth']}"/>">
+                        value="<c:out value="${param['userMonth']}"/>">
                     <option value="0" selected="selected">Month...</option>
                     <c:forTokens items="January,February,March,April,May,June,July,August,September,October,November,December" delims="," var="month">
                         <option><c:out value="${month}"/></option>
                     </c:forTokens>
                 </select>
                 <select name="userYear" class="form-control" 
-                       value="<c:out value="${param['userYear']}"/>">
+                        value="<c:out value="${param['userYear']}"/>">
                     <option value="0" selected="selected">Year...</option>
                     <c:forEach var="i" begin="1917" end="2002">
                         <option><c:out value ="${i}">${i}</c:out></option>
                     </c:forEach>
                 </select>
             </div><br/><br/>
-            
+
             <div class="form-group">
                 Address
                 <input class="form-control" type="txtLabel" name="userAddressLine1" placeholder="First line" 
@@ -84,7 +85,7 @@
                 <input class="form-control" type="txtLabel" name="userCity" placeholder="City" 
                        value="<c:out value="${param['userCity']}"/>"/>
             </div><br/><br/>
-            
+
             <div class="form-group">
                 Login
                 <input class="form-control" type="txtLabel" name="userLogin" placeholder="Login" 
@@ -110,8 +111,9 @@
                 <input class="form-control" type="password" name="userPasswordConfirmation" placeholder="********" 
                        value="<c:out value="${param['userPasswordConfirmation']}"/>"/>
             </div><br/><br/>
+            <a class="btn btn-primary btn-xs" href='<c:url value="/"></c:url>' title="Back to home page">
+                Cancel</a>
             <input class="btn btn-primary" type="submit" name="applyBtn" value="Apply"/>
-            <input class="btn btn-primary btn-xs" type="button" name="cancelBtn" value="Cancel"/>
         </form><br/><br/>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

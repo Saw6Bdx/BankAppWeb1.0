@@ -23,10 +23,18 @@
             <a href="form.php" title="...">New Transaction</a>
         </nav>
         <section>
-            <form action="<c:url value="/deleteCategory"><c:param name = "categoryId" value="${param['categoryId']}"/></c:url>" method="post">
+            <form action="<c:url value="/deleteCategory">
+                      <c:param name="holderId" value="${param['holderId']}"/>
+                      <c:param name="accountId" value="${param['accountId']}"/>
+                      <c:param name = "categoryId" value="${param['categoryId']}"/>
+                  </c:url>" method="post">
                 <label>Are you sure you want to delete this category <c:out value="${param['categoryLabel']}"/> ?</label>
-                <input type="submit" name="yesBtn" value="Yes" />
-                <input type="submit" name="noBtn" value="No" />
+                <a class="btn btn-primary btn-xs" href='<c:url value="/displayCategories">
+                       <c:param name="holderId" value="${param['holderId']}"/>
+                       <c:param name="accountId" value="${param['accountId']}"/>
+                   </c:url>' title="Back to home page">
+                    No</a>
+                <input class="btn btn-primary btn-xs" type="submit" name="yesBtn" value="Yes"/>
             </form>
         </section>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

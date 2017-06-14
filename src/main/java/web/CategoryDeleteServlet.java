@@ -37,17 +37,15 @@ public class CategoryDeleteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        if (req.getParameter("yesBtn") != null) {
-            try {
-                this.categoryManager.delete(req.getParameter("categoryId"));
-            } catch (IllegalStateException ex) {
-                Logger.getLogger(CategoryDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            this.categoryManager.delete(req.getParameter("categoryId"));
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(CategoryDeleteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        resp.sendRedirect(req.getContextPath() + "/displayCategory");
-        
+
+        resp.sendRedirect(req.getContextPath() + "/displayCategories?holderId=" + Integer.parseInt(req.getParameter("holderId")) + "&accountId=" + Integer.parseInt(req.getParameter("accountId")));
+
     }
 
 }

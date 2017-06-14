@@ -50,6 +50,8 @@
                         <td>
                             <c:if test = "${pos > 13}">
                                 <a href='<c:url value="/deleteCategory">
+                                       <c:param name="holderId" value="${param['holderId']}"/>
+                                       <c:param name="accountId" value="${param['accountId']}"/>
                                        <c:param name = "categoryId" value="${category.id}"/>
                                        <c:param name = "categoryLabel" value="${category.label}"/>
                                    </c:url>' 
